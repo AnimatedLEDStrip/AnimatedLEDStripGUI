@@ -4,11 +4,15 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.ObjectOutputStream
 import java.io.PrintWriter
+import java.net.InetAddress
+import java.net.ServerSocket
 import java.net.Socket
 
 object MessageSender {
-
-    private val socket = Socket("10.0.0.254", 5)
+    private val loopback = ServerSocket(5)
+    private val socket = try {Socket(ipAddress, 5)} catch(e: Exception) {
+        Socket(InetAddress.getLoopbackAddress(), 5)
+    }
     private val out: ObjectOutputStream
     private val inStream: InputStreamReader
     private val socIn: BufferedReader
@@ -16,6 +20,7 @@ object MessageSender {
     private var animationComplete = false
 
     init {
+        if(socket.inetAddress == InetAddress.getLoopbackAddress()) throw Exception("${socket.inetAddress} = ${InetAddress.getLoopbackAddress()}")
         out = ObjectOutputStream(socket.getOutputStream())
         inStream = InputStreamReader(socket.getInputStream())
         socIn = BufferedReader(InputStreamReader(socket.getInputStream()))
@@ -25,7 +30,6 @@ object MessageSender {
                     "C" -> animationComplete = true
                     "Q" -> System.exit(0)
                 }
-
             }
         }
     }

@@ -418,10 +418,7 @@ class CustomColorView : View() {
         }
 
         onTouchPressed = EventHandler {
-            val commandLine = CommandLine.parse("xset -d :0 dpms force on")
-            val executor = DefaultExecutor()
-            executor.setExitValue(0)
-            executor.execute(commandLine)
+            wakeScreen()
         }
 
         onSwipeRight = EventHandler {
@@ -448,10 +445,7 @@ class CustomColorView : View() {
                         font = Font.font(15.0)  // Set font size
                         /*  When button is pressed */
                         action {
-                            val commandLine = CommandLine.parse("xset -d :0 dpms force off")
-                            val executor = DefaultExecutor()
-                            executor.setExitValue(0)
-                            executor.execute(commandLine)   //  Send command
+                            blankScreen()
                         }
                     }
                 }

@@ -18,10 +18,7 @@ class InputStatic : View() {
         }
 
         onTouchPressed = EventHandler {
-            val commandLine = CommandLine.parse("xset -d :0 dpms force on")
-            val executor = DefaultExecutor()
-            executor.setExitValue(0)
-            executor.execute(commandLine)
+            wakeScreen()
         }
 
         val backColor = javafx.scene.paint.Color.CYAN

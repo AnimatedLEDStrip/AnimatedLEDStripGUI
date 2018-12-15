@@ -2,6 +2,7 @@ import com.jfoenix.controls.JFXButton
 import com.jfoenix.controls.JFXToggleButton
 import javafx.event.EventHandler
 import javafx.geometry.Pos
+import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -14,11 +15,12 @@ class InputDynamic : View() {
 
     var toggleReverse: JFXToggleButton by singleAssign()
 
+    private fun sendPixelMarathon(color: String) = MessageSender.send(mapOf("Animation" to Animations.PIXELMARATHON, "Color1" to parseHex(color)))
 
     override val root = borderpane {
 
         onSwipeLeft = EventHandler {
-            replaceWith(InputStatic::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+            replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
         }
 
         onSwipeRight = EventHandler {
@@ -26,10 +28,7 @@ class InputDynamic : View() {
         }
 
         onTouchPressed = EventHandler {
-            val commandLine = CommandLine.parse("xset -d :0 dpms force on")
-            val executor = DefaultExecutor()
-            executor.setExitValue(0)
-            executor.execute(commandLine)
+            wakeScreen()
         }
 
         val backColor = javafx.scene.paint.Color.AQUAMARINE
@@ -43,77 +42,86 @@ class InputDynamic : View() {
                 alignment = Pos.CENTER
 
                 row {
-                    toggleReverse = JFXToggleButton()
-                    this += toggleReverse.apply {
-
-                        text = "Test"
-
-
-                    }
-                }
-
-                row {
-                    this += JFXButton("Change Test").apply {
+                    this += JFXButton("Pixel Marathon").apply {
+                        alignment = Pos.CENTER
                         action {
-                            when (toggleReverse.isSelected) {
-                                true -> toggleReverse.text = "Works"
-                                false -> toggleReverse.text = "Test"
-                            }
+                            sendPixelMarathon(Color.RED.getHex())
                         }
                     }
                 }
 
-                row {
-                    this += JFXButton("Start Animation Group").apply {
+//                row {
+//                    toggleReverse = JFXToggleButton()
+//                    this += toggleReverse.apply {
+//
+//                        text = "Test"
+//
+//
+//                    }
+//                }
 
-                        var continueAnimationGroup = false
+//                row {
+//                    this += JFXButton("Change Test").apply {
+//                        action {
+//                            when (toggleReverse.isSelected) {
+//                                true -> toggleReverse.text = "Works"
+//                                false -> toggleReverse.text = "Test"
+//                            }
+//                        }
+//                    }
+//                }
 
-                        action {
-                            continueAnimationGroup = when (continueAnimationGroup) {
-                                true -> false
-                                false -> true
-                            }
-                            if (continueAnimationGroup) {
-                                GlobalScope.launch {
-                                    var animationCounter = 0
-                                    while (continueAnimationGroup) {
-                                        if (MessageSender.isAnimationComplete()) {
-//                                            MessageSender.send(animationGroupList[(animationCounter % animationGroupList.size)])
-                                            animationCounter++
-                                            MessageSender.resetAnimationComplete()
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+//                row {
+//                    this += JFXButton("Start Animation Group").apply {
+//
+//                        var continueAnimationGroup = false
+//
+//                        action {
+//                            continueAnimationGroup = when (continueAnimationGroup) {
+//                                true -> false
+//                                false -> true
+//                            }
+//                            if (continueAnimationGroup) {
+//                                GlobalScope.launch {
+//                                    var animationCounter = 0
+//                                    while (continueAnimationGroup) {
+//                                        if (MessageSender.isAnimationComplete()) {
+////                                            MessageSender.send(animationGroupList[(animationCounter % animationGroupList.size)])
+//                                            animationCounter++
+//                                            MessageSender.resetAnimationComplete()
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
 
-                row {
-                    this += JFXButton("Start MTC Group").apply {
-
-                        var continueAnimationGroup = false
-
-                        action {
-                            continueAnimationGroup = when (continueAnimationGroup) {
-                                true -> false
-                                false -> true
-                            }
-                            if (continueAnimationGroup) {
-                                GlobalScope.launch {
-                                    var animationCounter = 0
-                                    while (continueAnimationGroup) {
-                                        if (MessageSender.isAnimationComplete()) {
-//                                            MessageSender.send(getMTCString(colors[animationCounter % colors.size].getHex()))
-                                            animationCounter++
-                                            MessageSender.resetAnimationComplete()
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+//                row {
+//                    this += JFXButton("Start MTC Group").apply {
+//
+//                        var continueAnimationGroup = false
+//
+//                        action {
+//                            continueAnimationGroup = when (continueAnimationGroup) {
+//                                true -> false
+//                                false -> true
+//                            }
+//                            if (continueAnimationGroup) {
+//                                GlobalScope.launch {
+//                                    var animationCounter = 0
+//                                    while (continueAnimationGroup) {
+//                                        if (MessageSender.isAnimationComplete()) {
+////                                            MessageSender.send(getMTCString(colors[animationCounter % colors.size].getHex()))
+//                                            animationCounter++
+//                                            MessageSender.resetAnimationComplete()
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
 

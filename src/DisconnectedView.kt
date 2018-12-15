@@ -12,10 +12,7 @@ class DisconnectedView : View() {
     override val root = borderpane {
 
         onTouchPressed = EventHandler {
-            val commandLine = CommandLine.parse("xset -d :0 dpms force on")
-            val executor = DefaultExecutor()
-            executor.setExitValue(0)
-            executor.execute(commandLine)
+            wakeScreen()
         }
 
         val backColor = Color.RED
@@ -47,16 +44,43 @@ class DisconnectedView : View() {
         }
 
         bottom {
-
-            this += JFXButton("Connect").apply {
-                alignment = Pos.CENTER
-                buttonType = JFXButton.ButtonType.RAISED
-                font = Font.font(35.0)
-                useMaxSize = true
-                action {
-                    MessageSender
-                    runLater(1.0.seconds) {
-                        replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
+            gridpane {
+                row {
+                    alignment = Pos.CENTER
+                    useMaxSize = true
+                    this += JFXButton("Connect (Max)").apply {
+                        alignment = Pos.CENTER
+                        buttonType = JFXButton.ButtonType.RAISED
+                        font = Font.font(35.0)
+                        useMaxSize = true
+                        action {
+                            ipAddress = "10.44.157.2"
+                            try {
+                                MessageSender
+                                runLater(1.0.seconds) {
+                                    replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
+                                }
+                            } catch (e: Exception) {
+                                println("Error initializing Message Sender: $e")
+                            }
+                        }
+                    }
+                    this += JFXButton("Connect (Katie)").apply {
+                        alignment = Pos.CENTER
+                        buttonType = JFXButton.ButtonType.RAISED
+                        font = Font.font(35.0)
+                        useMaxSize = true
+                        action {
+                            ipAddress = "10.44.103.233"
+                            try {
+                                MessageSender
+                                runLater(1.0.seconds) {
+                                    replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
+                                }
+                            } catch (e: Exception) {
+                                println("Error initializing Message Sender: $e")
+                            }
+                        }
                     }
                 }
             }

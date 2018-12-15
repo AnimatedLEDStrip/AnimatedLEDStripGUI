@@ -38,7 +38,7 @@ class DefaultsView : View() {
             true -> "B"
             false -> "F"
         }
-        MessageSender.send(mapOf("Animation" to Animations.STACK, "Color1" to parseHex(color), "direction" to direction))
+        MessageSender.send(mapOf("Animation" to Animations.STACKOVERFLOW, "Color1" to parseHex(color), "Color2" to parseHex("FFFF00"), "direction" to direction))
     }
 
     private fun sendSTC(color: String) =
@@ -66,19 +66,16 @@ class DefaultsView : View() {
             replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
         }
 
-        onSwipeUp = EventHandler {
-            replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.UP))
-        }
+//        onSwipeUp = EventHandler {
+//            replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.UP))
+//        }
 
 
         /*  Create EventHandler for touch event
         *   Tells screen to wake up, solving issue of screen not waking normally due to GUI
         */
         onTouchPressed = EventHandler {
-            val commandLine = CommandLine.parse("xset -d :0 dpms force on")
-            val executor = DefaultExecutor()
-            executor.setExitValue(0)
-            executor.execute(commandLine)
+            wakeScreen()
         }
 
 
@@ -106,10 +103,7 @@ class DefaultsView : View() {
                         font = Font.font(15.0)  // Set font size
                         /*  When button is pressed */
                         action {
-                            val commandLine = CommandLine.parse("xset -d :0 dpms force off")
-                            val executor = DefaultExecutor()
-                            executor.setExitValue(0)
-                            executor.execute(commandLine)   //  Send command
+                            blankScreen()
                         }
                     }
                 }

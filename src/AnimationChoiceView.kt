@@ -24,10 +24,7 @@ class AnimationChoiceView : View() {
                         font = Font.font(15.0)  // Set font size
                         /*  When button is pressed */
                         action {
-                            val commandLine = CommandLine.parse("xset -d :0 dpms force off")
-                            val executor = DefaultExecutor()
-                            executor.setExitValue(0)
-                            executor.execute(commandLine)   //  Send command
+                            blankScreen()
                         }
                     }
                 }
