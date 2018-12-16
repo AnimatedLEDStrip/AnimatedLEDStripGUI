@@ -9,9 +9,11 @@ import java.net.ServerSocket
 import java.net.Socket
 
 object MessageSender {
-    private val loopback = ServerSocket(5)
-    private val socket = try {Socket(ipAddress, 5)} catch(e: Exception) {
-        Socket(InetAddress.getLoopbackAddress(), 5)
+    private val socket: Socket = try {
+        Socket(ipAddress, 5)
+    } catch(e: Exception) {
+        shutdownGUI()
+        Socket("0.0.0.0", 5)
     }
     private val out: ObjectOutputStream
     private val inStream: InputStreamReader
@@ -20,7 +22,6 @@ object MessageSender {
     private var animationComplete = false
 
     init {
-        if(socket.inetAddress == InetAddress.getLoopbackAddress()) throw Exception("${socket.inetAddress} = ${InetAddress.getLoopbackAddress()}")
         out = ObjectOutputStream(socket.getOutputStream())
         inStream = InputStreamReader(socket.getInputStream())
         socIn = BufferedReader(InputStreamReader(socket.getInputStream()))
