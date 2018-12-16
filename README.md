@@ -1,8 +1,9 @@
 # LED_GUI
 
-## Dependencies (Maven Coordinates):
+## Uses Java 8:
+> https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html
 
-### Java 8
+## Dependencies (Maven Coordinates):
 
 ### TornadoFX
 
