@@ -37,6 +37,8 @@ class InputDynamic : View() {
             backgroundColor += backColor
         }
 
+        addExitAndBlankButtons(this)
+
         center {
             gridpane {
                 alignment = Pos.CENTER
@@ -125,21 +127,21 @@ class InputDynamic : View() {
             }
         }
 
-        top {
-            borderpane {
-                right {
-
-                    this += JFXButton("Exit").apply {
-                        alignment = Pos.CENTER_RIGHT
-                        font = Font.font(15.0)
-//                useMaxSize = true
-                        action {
-                            shutdownGUI()
-                        }
-                    }
-                }
-            }
-        }
+//        top {
+//            borderpane {
+//                right {
+//
+//                    this += JFXButton("Exit").apply {
+//                        alignment = Pos.CENTER_RIGHT
+//                        font = Font.font(15.0)
+////                useMaxSize = true
+//                        action {
+//                            shutdownGUI()
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
 }

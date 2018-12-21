@@ -26,22 +26,22 @@ class DisconnectedView : View() {
             font = Font.font(60.0)
             alignment = Pos.CENTER
         }
-
-        top {
-            borderpane {
-                right {
-
-                    this += JFXButton("Exit").apply {
-                        alignment = Pos.CENTER_RIGHT
-                        font = Font.font(15.0)
-//                useMaxSize = true
-                        action {
-                            shutdownGUI()
-                        }
-                    }
-                }
-            }
-        }
+        addExitAndBlankButtons(this)
+//        top {
+//            borderpane {
+//                right {
+//
+//                    this += JFXButton("Exit").apply {
+//                        alignment = Pos.CENTER_RIGHT
+//                        font = Font.font(15.0)
+////                useMaxSize = true
+//                        action {
+//                            shutdownGUI()
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         bottom {
             gridpane {
