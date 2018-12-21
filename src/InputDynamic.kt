@@ -2,6 +2,7 @@ import com.jfoenix.controls.JFXButton
 import com.jfoenix.controls.JFXToggleButton
 import javafx.event.EventHandler
 import javafx.geometry.Pos
+import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import kotlinx.coroutines.GlobalScope
@@ -29,6 +30,13 @@ class InputDynamic : View() {
 
         onTouchPressed = EventHandler {
             wakeScreen()
+        }
+
+        onKeyPressed = EventHandler { t ->
+            when (t.code) {
+                KeyCode.RIGHT -> replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+                KeyCode.LEFT -> replaceWith(DefaultsView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
+            }
         }
 
         val backColor = javafx.scene.paint.Color.AQUAMARINE

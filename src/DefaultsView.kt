@@ -3,6 +3,7 @@ import com.jfoenix.controls.JFXSlider
 import com.jfoenix.controls.JFXToggleButton
 import javafx.event.EventHandler
 import javafx.geometry.Pos
+import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import org.apache.commons.exec.CommandLine
@@ -69,7 +70,12 @@ class DefaultsView : View() {
 //            replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.UP))
 //        }
 
-
+        onKeyPressed = EventHandler { t ->
+            when (t.code) {
+                KeyCode.RIGHT -> replaceWith(InputDynamic::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+                KeyCode.LEFT -> replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
+            }
+        }
         /*  Create EventHandler for touch event
         *   Tells screen to wake up, solving issue of screen not waking normally due to GUI
         */

@@ -82,6 +82,23 @@ class DisconnectedView : View() {
                             }
                         }
                     }
+                    this += JFXButton("Connect (Local)").apply {
+                        alignment = Pos.CENTER
+                        buttonType = JFXButton.ButtonType.RAISED
+                        font = Font.font(35.0)
+                        useMaxSize = true
+                        action {
+                            ipAddress = "localhost"
+                            try {
+                                MessageSender
+                                runLater(1.0.seconds) {
+                                    replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
+                                }
+                            } catch (e: Exception) {
+                                println("Error initializing Message Sender: $e")
+                            }
+                        }
+                    }
                 }
             }
         }

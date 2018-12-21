@@ -2,6 +2,7 @@ import com.jfoenix.controls.JFXButton
 import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.control.Label
+import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import javafx.scene.paint.Color.*
 import javafx.scene.text.Font
@@ -436,6 +437,13 @@ class CustomColorView : View() {
 
         onSwipeLeft = EventHandler {
             replaceWith(DefaultsView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+        }
+
+        onKeyPressed = EventHandler { t ->
+            when (t.code) {
+                KeyCode.RIGHT -> replaceWith(DefaultsView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+                KeyCode.LEFT -> replaceWith(InputDynamic::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
+            }
         }
 
         /*  Section for top buttons */
