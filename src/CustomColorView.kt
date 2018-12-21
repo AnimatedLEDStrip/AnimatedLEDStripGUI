@@ -9,9 +9,9 @@ import org.apache.commons.exec.CommandLine
 import org.apache.commons.exec.DefaultExecutor
 import tornadofx.*
 
-enum class Direction {
-    FORWARD, BACKWARD
-}
+//enum class Direction {
+//    FORWARD, BACKWARD
+//}
 
 class CustomColorView : View() {
 
@@ -397,16 +397,25 @@ class CustomColorView : View() {
 
     /*  Helper functions for sending commands */
     private fun sendC(color: String) =
-            MessageSender.send(mapOf("Animation" to Animations.COLOR1, "color1" to parseHex(color)))
+            MessageSender.send(mapOf("Animation" to Animations.COLOR1, "Color1" to parseHex(color)))
 
-    private fun sendWIP(color: String) =
-            MessageSender.send(mapOf("Animation" to Animations.WIPE, "Color1" to parseHex(color), "direction" to selectedDirection))
+    private fun sendWIP(color: String) {
+        val direction = when (selectedDirection) {
+            Direction.BACKWARD -> 'B'
+            Direction.FORWARD -> 'F'
+        }
+        MessageSender.send(mapOf("Animation" to Animations.WIPE, "Color1" to parseHex(color), "Direction" to direction))
+    }
 
     private fun sendSTC(color: String) =
             MessageSender.send(mapOf("Animation" to Animations.SPARKLETOCOLOR, "Color1" to parseHex(color)))
 
     private fun sendMTC(color: String) {
-        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUNTOCOLOR, "Color1" to parseHex(color), "direction" to selectedDirection))
+        val direction = when (selectedDirection) {
+            Direction.BACKWARD -> 'B'
+            Direction.FORWARD -> 'F'
+        }
+        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUNTOCOLOR, "Color1" to parseHex(color), "Direction" to direction))
     }
 
 

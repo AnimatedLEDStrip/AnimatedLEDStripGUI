@@ -27,18 +27,18 @@ class DefaultsView : View() {
 
     private fun sendWIP(color: String) {
         val direction = when (toggleReverse.isSelected) {
-            true -> "B"
-            false -> "F"
+            true -> 'B'
+            false -> 'F'
         }
-        MessageSender.send(mapOf("Animation" to Animations.WIPE, "Color1" to parseHex(color), "direction" to direction))
+        MessageSender.send(mapOf("Animation" to Animations.WIPE, "Color1" to parseHex(color), "Direction" to direction))
     }
 
     private fun sendSTK(color: String) {
         val direction = when (toggleReverse.isSelected) {
-            true -> "B"
-            false -> "F"
+            true -> 'B'
+            false -> 'F'
         }
-        MessageSender.send(mapOf("Animation" to Animations.STACKOVERFLOW, "Color1" to parseHex(color), "Color2" to parseHex("FFFF00"), "direction" to direction))
+        MessageSender.send(mapOf("Animation" to Animations.STACKOVERFLOW, "Color1" to parseHex(color), "Color2" to parseHex("FFFF00"), "Direction" to direction))
     }
 
     private fun sendSTC(color: String) =
@@ -46,10 +46,10 @@ class DefaultsView : View() {
 
     private fun sendMTC(color: String) {
         val direction = when (toggleReverse.isSelected) {
-            true -> "B"
-            false -> "F"
+            true -> 'B'
+            false -> 'F'
         }
-        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUNTOCOLOR, "Color1" to parseHex(color), "direction" to direction))
+        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUNTOCOLOR, "Color1" to parseHex(color), "Direction" to direction))
     }
 
 
