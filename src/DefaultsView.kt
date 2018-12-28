@@ -21,6 +21,7 @@ class DefaultsView : View() {
     private var toggleReverse: JFXToggleButton by singleAssign()
     private var brightnessSlider: JFXSlider by singleAssign()
 
+    private val colorList = listOf(Color.BLUE, Color.AQUA, Color.LIME, Color.YELLOW, Color.RED, Color.MAGENTA)
 
     /*  Helper functions for sending commands */
     private fun sendC(color: String) =
@@ -39,7 +40,7 @@ class DefaultsView : View() {
             true -> 'B'
             false -> 'F'
         }
-        MessageSender.send(mapOf("Animation" to Animations.STACKOVERFLOW, "Color1" to parseHex(color), "Color2" to parseHex("FFFF00"), "Direction" to direction))
+        MessageSender.send(mapOf("Animation" to Animations.STACK, "Color1" to parseHex(color), "Direction" to direction))
     }
 
     private fun sendSTC(color: String) =
@@ -203,78 +204,21 @@ class DefaultsView : View() {
 
                             label("    ")   // Spacer between buttons - Slightly larger than others
 
-                            /*  Add blue color button */
-                            this += JFXButton("Send C").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.BLUE
-                                    textFill = Color.WHITE
+                            colorList.forEach {
+                                this += JFXButton("Send C").apply {
+                                    alignment = Pos.CENTER
+                                    useMaxSize = true
+                                    setMinSize(50.0, 50.0)
+                                    style {
+                                        backgroundColor += it
+                                        if (it == Color.BLUE) textFill = Color.WHITE
+                                    }
+                                    action {
+                                        sendC(it.getHex())
+                                    }
                                 }
-                                action {
-                                    sendC("FF")
-                                }
-                            }
 
-                            label("  ") // Spacer
-
-                            /*  Add aqua color button */
-                            this += JFXButton("Send C").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.AQUA
-                                }
-                                action {
-                                    sendC("FFFF")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add green color button */
-                            this += JFXButton("Send C").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.GREEN
-                                }
-                                action {
-                                    sendC("FF00")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add yellow color button */
-                            this += JFXButton("Send C").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.YELLOW
-                                }
-                                action {
-                                    sendC("FFFF00")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add red color button */
-                            this += JFXButton("Send C").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.RED
-                                }
-                                action {
-                                    sendC("FF0000")
-                                }
+                                label("  ") // Spacer
                             }
 
                             label("  ") // Spacer
@@ -316,99 +260,22 @@ class DefaultsView : View() {
 
                             label("    ")   // Larger spacer
 
-                            /*  Add blue wipe button */
-                            this += JFXButton("Send WIP").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.BLUE
-                                    textFill = Color.WHITE
+                            colorList.forEach {
+                                this += JFXButton("Send WIP").apply {
+                                    alignment = Pos.CENTER
+                                    useMaxSize = true
+                                    setMinSize(50.0, 50.0)
+                                    style {
+                                        backgroundColor += it
+                                        if (it == Color.BLUE) textFill = Color.WHITE
+                                    }
+                                    action {
+                                        sendWIP(it.getHex())
+                                    }
                                 }
-                                action {
-                                    sendWIP("FF")
-                                }
+
+                                label("  ") // Spacer
                             }
-
-                            label("  ") // Spacer
-
-                            /*  Add aqua wipe button */
-                            this += JFXButton("Send WIP").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.AQUA
-                                }
-                                action {
-                                    sendWIP("FFFF")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add green wipe button */
-                            this += JFXButton("Send WIP").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.GREEN
-
-                                }
-                                action {
-                                    sendWIP("FF00")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add yellow wipe button */
-                            this += JFXButton("Send WIP").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.YELLOW
-
-                                }
-                                action {
-                                    sendWIP("FFFF00")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add red wipe button */
-                            this += JFXButton("Send WIP").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.RED
-
-                                }
-                                action {
-                                    sendWIP("FF0000")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add magenta wipe button */
-                            this += JFXButton("Send WIP").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.MAGENTA
-
-                                }
-                                action {
-                                    sendWIP("FF00FF")
-                                }
-                            }
-
                         }
 
                         row { label {} }    // Row spacer
@@ -434,93 +301,21 @@ class DefaultsView : View() {
 
                             label("    ")   // Larger spacer
 
-                            /*  Add blue STC button */
-                            this += JFXButton("Send STC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.BLUE
-                                    textFill = Color.WHITE
+                            colorList.forEach {
+                                this += JFXButton("Send STC").apply {
+                                    alignment = Pos.CENTER
+                                    useMaxSize = true
+                                    setMinSize(50.0, 50.0)
+                                    style {
+                                        backgroundColor += it
+                                        if (it == Color.BLUE) textFill = Color.WHITE
+                                    }
+                                    action {
+                                        sendSTC(it.getHex())
+                                    }
                                 }
-                                action {
-                                    sendSTC("FF")
-                                }
-                            }
 
-                            label("  ") // Spacer
-
-                            /*  Add aqua STC button */
-                            this += JFXButton("Send STC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.AQUA
-                                }
-                                action {
-                                    sendSTC("FFFF")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add green STC button */
-                            this += JFXButton("Send STC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.GREEN
-                                }
-                                action {
-                                    sendSTC("FF00")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add yellow STC button */
-                            this += JFXButton("Send STC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.YELLOW
-                                }
-                                action {
-                                    sendSTC("FFFF00")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add red STC button */
-                            this += JFXButton("Send STC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.RED
-                                }
-                                action {
-                                    sendSTC("FF0000")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add magenta STC button */
-                            this += JFXButton("Send STC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.MAGENTA
-                                }
-                                action {
-                                    sendSTC("FF00FF")
-                                }
+                                label("  ") // Spacer
                             }
                         }
 
@@ -547,96 +342,23 @@ class DefaultsView : View() {
 
                             label("    ")   // Larger spacer
 
-                            /*  Add blue MTC button */
-                            this += JFXButton("Send MTC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.BLUE
-                                    textFill = Color.WHITE
+                            colorList.forEach {
+                                this += JFXButton("Send MTC").apply {
+                                    alignment = Pos.CENTER
+                                    useMaxSize = true
+                                    setMinSize(50.0, 50.0)
+                                    style {
+                                        backgroundColor += it
+                                        if (it == Color.BLUE) textFill = Color.WHITE
+                                    }
+                                    action {
+                                        sendMTC(it.getHex())
+                                    }
                                 }
-                                action {
-                                    sendMTC("FF")
-                                }
-                            }
 
-                            label("  ") // Spacer
-
-                            /*  Add aqua MTC button */
-                            this += JFXButton("Send MTC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.AQUA
-                                }
-                                action {
-                                    sendMTC("FFFF")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add green MTC button */
-                            this += JFXButton("Send MTC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.GREEN
-                                }
-                                action {
-                                    sendMTC("FF00")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add yellow MTC button */
-                            this += JFXButton("Send MTC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.YELLOW
-                                }
-                                action {
-                                    sendMTC("FFFF00")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add red MTC button */
-                            this += JFXButton("Send MTC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.RED
-                                }
-                                action {
-                                    sendMTC("FF0000")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add magenta MTC button */
-                            this += JFXButton("Send MTC").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.MAGENTA
-                                }
-                                action {
-                                    sendMTC("FF00FF")
-                                }
+                                label("  ") // Spacer
                             }
                         }
-
                         row { label {} }    // Spacer between rows of buttons
 
                         /*  Fifth row of buttons
@@ -644,7 +366,7 @@ class DefaultsView : View() {
                         *   Each button is colored to match the color it will send
                         */
                         row {
-                            /*  Add black wipe button */
+                            /*  Add black stack button */
                             this += JFXButton("Send STK").apply {
                                 alignment = Pos.CENTER
                                 useMaxSize = true
@@ -660,136 +382,26 @@ class DefaultsView : View() {
 
                             label("    ")   // Larger spacer
 
-                            /*  Add blue wipe button */
-                            this += JFXButton("Send STK").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.BLUE
-                                    textFill = Color.WHITE
+                            colorList.forEach {
+                                this += JFXButton("Send STK").apply {
+                                    alignment = Pos.CENTER
+                                    useMaxSize = true
+                                    setMinSize(50.0, 50.0)
+                                    style {
+                                        backgroundColor += it
+                                        if (it == Color.BLUE) textFill = Color.WHITE
+                                    }
+                                    action {
+                                        sendSTK(it.getHex())
+                                    }
                                 }
-                                action {
-                                    sendSTK("FF")
-                                }
+
+                                label("  ") // Spacer
                             }
-
-                            label("  ") // Spacer
-
-                            /*  Add aqua wipe button */
-                            this += JFXButton("Send STK").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.AQUA
-                                }
-                                action {
-                                    sendSTK("FFFF")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add green wipe button */
-                            this += JFXButton("Send STK").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.GREEN
-
-                                }
-                                action {
-                                    sendSTK("FF00")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add yellow wipe button */
-                            this += JFXButton("Send STK").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.YELLOW
-
-                                }
-                                action {
-                                    sendSTK("FFFF00")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add red wipe button */
-                            this += JFXButton("Send STK").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.RED
-
-                                }
-                                action {
-                                    sendSTK("FF0000")
-                                }
-                            }
-
-                            label("  ") // Spacer
-
-                            /*  Add magenta wipe button */
-                            this += JFXButton("Send STK").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.MAGENTA
-
-                                }
-                                action {
-                                    sendSTK("FF00FF")
-                                }
-                            }
-
                         }
+
                     }
                 }
-
-                /*  Third row of GUI
-                *   Contains slider for brightness
-                */
-//                row {
-//                    gridpane {
-//                        row { label {} }    // Row spacer
-//
-//                        /*  Add brightness slider */
-//                        row {
-//                            alignment = Pos.CENTER  // Set alignment
-//                            /*  Create slider with min, max and default values
-//                            *   min = 0.0
-//                            *   max = 255.0
-//                            *   default = 255.0
-//                            */
-//                            brightnessSlider = JFXSlider(0.0, 255.0, 255.0)
-//                            this += brightnessSlider.apply {
-//                                alignment = Pos.CENTER  // Set alignment
-//                                setMinSize(150.0, 50.0) // Set minimum size
-//                            }
-//                        }
-//
-//                        /*  Add brightness label */
-//                        row {
-//                            alignment = Pos.CENTER  // Set alignment
-//                            /*  Create "Brightness" label */
-//                            label("Brightness") {
-//                                alignment = Pos.CENTER  // Set alignment
-//                                useMaxWidth = true  // Use full size of cell
-//                            }
-//                        }
-//                    }
-//                }
             }
         }
     }

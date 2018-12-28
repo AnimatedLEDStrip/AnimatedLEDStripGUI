@@ -10,10 +10,6 @@ import org.apache.commons.exec.CommandLine
 import org.apache.commons.exec.DefaultExecutor
 import tornadofx.*
 
-//enum class Direction {
-//    FORWARD, BACKWARD
-//}
-
 class CustomColorView : View() {
 
     private var colorButton: JFXButton by singleAssign()
