@@ -438,7 +438,7 @@ class CustomColorView : View() {
         onKeyPressed = EventHandler { t ->
             when (t.code) {
                 KeyCode.RIGHT -> replaceWith(DefaultsView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                KeyCode.LEFT -> replaceWith(InputDynamic::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
+                KeyCode.LEFT -> replaceWith(ContinuousAnimationView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
             }
         }
 
