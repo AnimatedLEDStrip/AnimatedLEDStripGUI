@@ -1,9 +1,11 @@
+import com.jfoenix.controls.JFXButton
+import javafx.geometry.Pos
+import javafx.scene.layout.VBox
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.ObjectOutputStream
-import java.io.PrintWriter
+import tornadofx.*
+import java.io.*
 import java.net.InetAddress
 import java.net.ServerSocket
 import java.net.Socket
@@ -16,23 +18,42 @@ object MessageSender {
         Socket("0.0.0.0", 5)
     }
     private val out: ObjectOutputStream
-    private val inStream: InputStreamReader
-    private val socIn: BufferedReader
+//    private val inStream: InputStreamReader
+    private val socIn: ObjectInputStream
     private var doQuit = false
     private var animationComplete = false
 
     init {
         out = ObjectOutputStream(socket.getOutputStream())
-        inStream = InputStreamReader(socket.getInputStream())
-        socIn = BufferedReader(InputStreamReader(socket.getInputStream()))
+        socIn = ObjectInputStream(BufferedInputStream(socket.getInputStream()))
+        animations = VBox()
+
         GlobalScope.launch {
+            var input: Map<*, *>
             while (true) {
-                when (socIn.readLine()) {
-                    "C" -> animationComplete = true
-                    "Q" -> System.exit(0)
+                input = socIn.readObject() as Map<*, *>
+                println("Received: $input")
+                animations += JFXButton("${input["Animation"]}: ${input["ID"].toString()}").apply {
+                    alignment = Pos.CENTER
+                    val id = input["ID"].toString()
+                    action {
+                        GlobalScope.launch {
+                            send(mapOf("Animation" to Animations.ENDANIMATION, "ID" to id))
+                        }
+                        animations.children.remove(this@apply)
+                    }
                 }
             }
         }
+
+//        GlobalScope.launch {
+//            while (true) {
+//                when (socIn.readLine()) {
+//                    "C" -> animationComplete = true
+//                    "Q" -> System.exit(0)
+//                }
+//            }
+//        }
     }
 
     fun send(args: Map<*, *>) {

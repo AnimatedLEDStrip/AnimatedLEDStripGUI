@@ -220,21 +220,6 @@ class DefaultsView : View() {
 
                                 label("  ") // Spacer
                             }
-
-                            label("  ") // Spacer
-
-                            /*  Add magenta color button */
-                            this += JFXButton("Send C").apply {
-                                alignment = Pos.CENTER
-                                useMaxSize = true
-                                setMinSize(50.0, 50.0)
-                                style {
-                                    backgroundColor += Color.MAGENTA
-                                }
-                                action {
-                                    sendC("FF00FF")
-                                }
-                            }
                         }
 
                         row { label {} }    // Spacer between rows of buttons

@@ -14,7 +14,50 @@ import tornadofx.*
 class InputDynamic : View() {
 
 
-    var toggleReverse: JFXToggleButton by singleAssign()
+    private var toggleReverse: JFXButton by singleAssign()
+    private var colorButton: JFXButton by singleAssign()
+    private var stcButton: JFXButton by singleAssign()
+    private var wipeButton: JFXButton by singleAssign()
+    private var mtcButton: JFXButton by singleAssign()
+    private var selectedColor = Color.ALICEBLUE
+    private var selectedDirection = Direction.FORWARD
+
+    private fun changeColor() {
+        selectedColor = CCPresets.random().toColor()
+        root.apply {
+            style {
+                backgroundColor += selectedColor
+            }
+        }
+    }
+
+    private fun sendC(color: String) {
+        MessageSender.send(mapOf("Animation" to Animations.COLOR1, "Color1" to parseHex(color)))
+        changeColor()
+    }
+
+    private fun sendWIP(color: String) {
+        val direction = when (selectedDirection) {
+            Direction.BACKWARD -> 'B'
+            Direction.FORWARD -> 'F'
+        }
+        MessageSender.send(mapOf("Animation" to Animations.WIPE, "Color1" to parseHex(color), "Direction" to direction))
+        changeColor()
+    }
+
+    private fun sendSTC(color: String) {
+        MessageSender.send(mapOf("Animation" to Animations.SPARKLE, "Color1" to parseHex(color), "Continuous" to true))
+        changeColor()
+    }
+
+    private fun sendMTC(color: String) {
+        val direction = when (selectedDirection) {
+            Direction.BACKWARD -> 'B'
+            Direction.FORWARD -> 'F'
+        }
+        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUN, "Color1" to parseHex(color), "Direction" to direction, "Continuous" to true))
+        changeColor()
+    }
 
     private fun sendPixelMarathon(color: String) = MessageSender.send(mapOf("Animation" to Animations.PIXELMARATHON, "Color1" to parseHex(color)))
 
@@ -34,7 +77,7 @@ class InputDynamic : View() {
 
         onKeyPressed = EventHandler { t ->
             when (t.code) {
-                KeyCode.RIGHT -> replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+                KeyCode.RIGHT -> replaceWith(ContinuousAnimationView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
                 KeyCode.LEFT -> replaceWith(DefaultsView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
             }
         }
@@ -48,108 +91,126 @@ class InputDynamic : View() {
         addExitAndBlankButtons(this)
 
         center {
-            gridpane {
+            vbox {
                 alignment = Pos.CENTER
 
-                row {
-                    this += JFXButton("Pixel Marathon").apply {
+                this += JFXButton("Pixel Marathon").apply {
+                    alignment = Pos.CENTER
+                    action {
+                        sendPixelMarathon(Color.RED.getHex())
+                    }
+                }
+                label {
+                    style {
+                        font = Font(5.0)
+                    }
+                }
+                toggleReverse = JFXButton()
+                this += toggleReverse.apply {
+                    alignment = Pos.CENTER_LEFT
+                    setMinSize(125.0, 50.0)
+                    setMaxSize(125.0, 50.0)
+                    style {
+                        backgroundColor += selectedColor
                         alignment = Pos.CENTER
-                        action {
-                            sendPixelMarathon(Color.RED.getHex())
+                    }
+                    text = "Direction:\nForwards"
+                    action {
+                        toggleReverse.apply {
+                            when (toggleReverse.text) {
+                                "Direction:\nForwards" -> {
+                                    toggleReverse.text = " Direction:\nBackwards"
+                                    selectedDirection = Direction.BACKWARD
+                                }
+                                " Direction:\nBackwards" -> {
+                                    toggleReverse.text = "Direction:\nForwards"
+                                    selectedDirection = Direction.FORWARD
+                                }
+                                else -> {
+                                    toggleReverse.text = "Direction:\nForwards"
+                                    selectedDirection = Direction.FORWARD
+                                }
+                            }
                         }
                     }
                 }
-
-//                row {
-//                    toggleReverse = JFXToggleButton()
-//                    this += toggleReverse.apply {
-//
-//                        text = "Test"
-//
-//
-//                    }
-//                }
-
-//                row {
-//                    this += JFXButton("Change Test").apply {
-//                        action {
-//                            when (toggleReverse.isSelected) {
-//                                true -> toggleReverse.text = "Works"
-//                                false -> toggleReverse.text = "Test"
-//                            }
-//                        }
-//                    }
-//                }
-
-//                row {
-//                    this += JFXButton("Start Animation Group").apply {
-//
-//                        var continueAnimationGroup = false
-//
-//                        action {
-//                            continueAnimationGroup = when (continueAnimationGroup) {
-//                                true -> false
-//                                false -> true
-//                            }
-//                            if (continueAnimationGroup) {
-//                                GlobalScope.launch {
-//                                    var animationCounter = 0
-//                                    while (continueAnimationGroup) {
-//                                        if (MessageSender.isAnimationComplete()) {
-////                                            MessageSender.send(animationGroupList[(animationCounter % animationGroupList.size)])
-//                                            animationCounter++
-//                                            MessageSender.resetAnimationComplete()
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-
-//                row {
-//                    this += JFXButton("Start MTC Group").apply {
-//
-//                        var continueAnimationGroup = false
-//
-//                        action {
-//                            continueAnimationGroup = when (continueAnimationGroup) {
-//                                true -> false
-//                                false -> true
-//                            }
-//                            if (continueAnimationGroup) {
-//                                GlobalScope.launch {
-//                                    var animationCounter = 0
-//                                    while (continueAnimationGroup) {
-//                                        if (MessageSender.isAnimationComplete()) {
-////                                            MessageSender.send(getMTCString(colors[animationCounter % colors.size].getHex()))
-//                                            animationCounter++
-//                                            MessageSender.resetAnimationComplete()
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
+                label {
+                    style {
+                        font = Font(5.0)
+                    }
+                }
+                colorButton = JFXButton("Color")
+                this += colorButton.apply {
+                    alignment = Pos.CENTER_LEFT
+                    useMaxSize = true
+                    setMinSize(125.0, 50.0)
+                    setMaxSize(125.0, 50.0)
+                    style {
+                        backgroundColor += selectedColor
+                        alignment = Pos.CENTER
+                    }
+                    action {
+                        sendC(selectedColor.getHex())
+                    }
+                }
+                label {
+                    style {
+                        font = Font(5.0)
+                    }
+                }
+                stcButton = JFXButton("STC")
+                this += stcButton.apply {
+                    alignment = Pos.CENTER_LEFT
+                    useMaxSize = true
+                    setMinSize(125.0, 50.0)
+                    setMaxSize(125.0, 50.0)
+                    style {
+                        backgroundColor += selectedColor
+                        alignment = Pos.CENTER
+                    }
+                    action {
+                        sendSTC(selectedColor.getHex())
+                    }
+                }
+                label {
+                    style {
+                        font = Font(5.0)
+                    }
+                }
+                wipeButton = JFXButton("Wipe")
+                this += wipeButton.apply {
+                    alignment = Pos.CENTER_LEFT
+                    useMaxSize = true
+                    setMinSize(125.0, 50.0)
+                    setMaxSize(125.0, 50.0)
+                    style {
+                        backgroundColor += selectedColor
+                        alignment = Pos.CENTER
+                    }
+                    action {
+                        sendWIP(selectedColor.getHex())
+                    }
+                }
+                label {
+                    style {
+                        font = Font(5.0)
+                    }
+                }
+                mtcButton = JFXButton("MTC")
+                this += mtcButton.apply {
+                    alignment = Pos.CENTER_LEFT
+                    useMaxSize = true
+                    setMinSize(125.0, 50.0)
+                    setMaxSize(125.0, 50.0)
+                    style {
+                        backgroundColor += selectedColor
+                        alignment = Pos.CENTER
+                    }
+                    action {
+                        sendMTC(selectedColor.getHex())
+                    }
+                }
             }
         }
-
-//        top {
-//            borderpane {
-//                right {
-//
-//                    this += JFXButton("Exit").apply {
-//                        alignment = Pos.CENTER_RIGHT
-//                        font = Font.font(15.0)
-////                useMaxSize = true
-//                        action {
-//                            shutdownGUI()
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
-
 }
