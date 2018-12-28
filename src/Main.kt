@@ -3,6 +3,7 @@ import org.apache.commons.exec.CommandLine
 import org.apache.commons.exec.DefaultExecutor
 import tornadofx.*
 
+var isFullscreen = true
 
 var ipAddress = "10.44.157.2"
 
@@ -10,11 +11,18 @@ fun main(args: Array<String>) {
 //    PaletteHandler.addPalette("Test", listOf(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255))
 //    PaletteHandler.saveConfig()
     try {
+        if (args[0].toUpperCase() == "WINDOWED") isFullscreen = false
+    } catch (e: Exception) {
+    }
+
+    try {
         launch<MyApp>(args)
     } catch (e: Exception) {
         println("Exception somewhere in program")
-        try {shutdownGUI()}
-        catch (e: Exception) {}
+        try {
+            shutdownGUI()
+        } catch (e: Exception) {
+        }
     }
 }
 
@@ -24,18 +32,25 @@ fun shutdownGUI() {
         val executor = DefaultExecutor()
         executor.setExitValue(0)
         executor.execute(commandLine)
-        try {MessageSender.send(mapOf("Quit" to true))} catch (e: Exception) {}
+        try {
+            MessageSender.send(mapOf("Quit" to true))
+        } catch (e: Exception) {
+        }
     } catch (e: Exception) {
         println("Exception while setting blank time to 60s: $e")
     }
 
-    try {System.exit(0)} catch(e: Exception) {}
+    try {
+        System.exit(0)
+    } catch (e: Exception) {
+    }
 }
 
 class MyApp : App(DisconnectedView::class, SliderStylesheet::class) {
     override fun start(stage: Stage) {
         super.start(stage)
-        stage.isFullScreen = true
+        stage.isFullScreen = isFullscreen
+        stage.minHeight = 600.0
 
         try {
             val commandLine = CommandLine.parse("xset -d :0 s 30")
