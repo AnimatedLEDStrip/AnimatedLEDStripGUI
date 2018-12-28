@@ -3,9 +3,12 @@ import com.jfoenix.controls.JFXColorPicker
 import javafx.event.EventHandler
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.VBox
+import javafx.scene.paint.Color
 import tornadofx.*
 
 class ContinuousAnimationAddView : View() {
+
+    private var centerVBox: VBox by singleAssign()
 
     private var toggleReverse: JFXButton by singleAssign()
     private var altButton: JFXButton by singleAssign()
@@ -16,16 +19,22 @@ class ContinuousAnimationAddView : View() {
     private var spkButton: JFXButton by singleAssign()
     private var stoButton: JFXButton by singleAssign()
 
-    private var colorPicker: JFXColorPicker by singleAssign()
+    private var colorPicker1: JFXColorPicker by singleAssign()
+    private var colorPicker2: JFXColorPicker by singleAssign()
+    private var colorPicker3: JFXColorPicker by singleAssign()
+    private var colorPicker4: JFXColorPicker by singleAssign()
+    private var colorPicker5: JFXColorPicker by singleAssign()
     private var colorPickerButton: JFXButton by singleAssign()
 
-    private var centerVBox: VBox by singleAssign()
+    private val buttonGroupAnimations: List<JFXButton>
+    private val buttonGroupColors1: List<Any>
+    private val buttonGroupColors2: List<Any>
+    private val buttonGroupColors3: List<Any>
+    private val buttonGroupColors4: List<Any>
+    private val buttonGroupColors5: List<Any>
 
 
     private val animationBuilder = mutableMapOf<String, Any>()
-
-    private val buttonGroupAnimations: List<JFXButton>
-    private val buttonGroupColors: List<Any>
 
     init {
         centerVBox = VBox()
@@ -38,29 +47,30 @@ class ContinuousAnimationAddView : View() {
         spkButton = JFXButton("Sparkle")
         stoButton = JFXButton("Stack Overflow")
 
-        colorPicker = JFXColorPicker()
-        colorPickerButton = JFXButton("Set Color 1").apply {
-            action {
-                when (text) {
-                    "Set Color 1" ->
-                        animationBuilder["Color1"] = colorPicker.value.getHex()
-                    "Set Color 2" ->
-                        animationBuilder["Color2"] = colorPicker.value.getHex()
-                    "Set Color 3" ->
-                        animationBuilder["Color3"] = colorPicker.value.getHex()
-                    "Set Color 4" ->
-                        animationBuilder["Color4"] = colorPicker.value.getHex()
-                    "Set Color 5" ->
-                        animationBuilder["Color5"] = colorPicker.value.getHex()
-                }
-
-                println(animationBuilder["Color1"])
-            }
+        colorPicker1 = JFXColorPicker().apply {
+            value = Color.BLACK
         }
+        colorPicker2 = JFXColorPicker().apply {
+            value = Color.BLACK
+        }
+        colorPicker3 = JFXColorPicker().apply {
+            value = Color.BLACK
+        }
+        colorPicker4 = JFXColorPicker().apply {
+            value = Color.BLACK
+        }
+        colorPicker5 = JFXColorPicker().apply {
+            value = Color.BLACK
+        }
+        colorPickerButton = JFXButton("Set Colors")
 
         buttonGroupAnimations = listOf(altButton, mprButton, pxmButton, pxrButton, pxrtButton, spkButton, stoButton)
 
-        buttonGroupColors = listOf(colorPicker, colorPickerButton)
+        buttonGroupColors1 = listOf(colorPicker1, colorPickerButton)
+        buttonGroupColors2 = listOf(colorPicker1, colorPicker2, colorPickerButton)
+        buttonGroupColors3 = listOf(colorPicker1, colorPicker2, colorPicker3, colorPickerButton)
+        buttonGroupColors4 = listOf(colorPicker1, colorPicker2, colorPicker3, colorPicker4, colorPickerButton)
+        buttonGroupColors5 = listOf(colorPicker1, colorPicker2, colorPicker3, colorPicker4, colorPicker5, colorPickerButton)
 
         this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
 
@@ -68,49 +78,55 @@ class ContinuousAnimationAddView : View() {
             action {
                 animationBuilder["Animation"] = Animations.ALTERNATE
                 this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors)
+                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors2)
             }
         }
         mprButton.apply {
             action {
                 animationBuilder["Animation"] = Animations.MULTIPIXELRUN
                 this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors)
+                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors2)
             }
         }
         pxmButton.apply {
             action {
                 animationBuilder["Animation"] = Animations.PIXELMARATHON
                 this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors)
+                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors5)
             }
         }
         pxrButton.apply {
             action {
                 animationBuilder["Animation"] = Animations.PIXELRUN
                 this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors)
+                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors2)
             }
         }
         pxrtButton.apply {
             action {
                 animationBuilder["Animation"] = Animations.PIXELRUNWITHTRAIL
                 this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors)
+                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors2)
             }
         }
         spkButton.apply {
             action {
                 animationBuilder["Animation"] = Animations.SPARKLE
                 this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors)
+                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors1)
             }
         }
         stoButton.apply {
             action {
                 animationBuilder["Animation"] = Animations.STACKOVERFLOW
                 this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors)
+                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors2)
+            }
+        }
+
+        colorPickerButton.apply {
+            action {
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupColors5)
             }
         }
 
@@ -132,4 +148,10 @@ class ContinuousAnimationAddView : View() {
             this += centerVBox
         }
     }
+
+
+    private fun addAnimation() {
+
+    }
+
 }
