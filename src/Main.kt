@@ -1,9 +1,12 @@
+import javafx.scene.layout.VBox
 import javafx.stage.Stage
 import org.apache.commons.exec.CommandLine
 import org.apache.commons.exec.DefaultExecutor
 import tornadofx.*
 
 var isFullscreen = true
+
+var animations: VBox by singleAssign()
 
 var ipAddress = "10.44.157.2"
 

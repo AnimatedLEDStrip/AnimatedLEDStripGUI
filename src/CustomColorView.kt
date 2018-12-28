@@ -6,8 +6,6 @@ import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import javafx.scene.paint.Color.*
 import javafx.scene.text.Font
-import org.apache.commons.exec.CommandLine
-import org.apache.commons.exec.DefaultExecutor
 import tornadofx.*
 
 class CustomColorView : View() {
@@ -438,7 +436,7 @@ class CustomColorView : View() {
         onKeyPressed = EventHandler { t ->
             when (t.code) {
                 KeyCode.RIGHT -> replaceWith(DefaultsView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                KeyCode.LEFT -> replaceWith(ContinuousAnimationView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
+                KeyCode.LEFT -> replaceWith(ContinuousAnimationRemoveView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
             }
         }
 

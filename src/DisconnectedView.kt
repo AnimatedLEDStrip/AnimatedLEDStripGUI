@@ -3,8 +3,6 @@ import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
-import org.apache.commons.exec.CommandLine
-import org.apache.commons.exec.DefaultExecutor
 import tornadofx.*
 
 class DisconnectedView : View() {
