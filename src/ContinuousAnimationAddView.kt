@@ -261,7 +261,7 @@ class ContinuousAnimationAddView : View() {
     override val root = borderpane {
 
         style {
-            backgroundColor += Color.ORANGE
+            backgroundColor += Color.LIGHTSEAGREEN
         }
 
         addExitAndBlankButtons(this)

@@ -13,6 +13,7 @@ object MessageSender {
     private val socket: Socket = try {
         Socket(ipAddress, 5)
     } catch (e: Exception) {
+        println("Server not found at $ipAddress: $e")
         shutdownGUI()
         Socket("0.0.0.0", 5)
     }
@@ -37,8 +38,10 @@ object MessageSender {
                 ).apply {
                     style {
                         alignment = Pos.CENTER
-                        backgroundColor += ColorContainer(animationData["Color1"] as Long).toColor()
+                        val color1 = ColorContainer(animationData["Color1"] as Long)
+                        backgroundColor += color1.toColor()
                         font = Font.font(12.0)
+                        if (color1.grayscale() < 0x80) textFill = Color.WHITE
                     }
                     val id = input["ID"].toString()
                     action {
