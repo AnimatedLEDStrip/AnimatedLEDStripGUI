@@ -225,8 +225,4 @@ class ContinuousAnimationAddView : View() {
         }
     }
 
-    private fun addAnimation() {
-
-    }
-
 }
