@@ -1,7 +1,7 @@
 import com.jfoenix.controls.JFXButton
 import com.jfoenix.controls.JFXColorPicker
-import javafx.animation.Animation
 import javafx.event.EventHandler
+import javafx.geometry.Pos
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
@@ -217,10 +217,13 @@ class ContinuousAnimationAddView : View() {
         }
 
         center {
-            this += centerVBox
+            this += centerVBox.apply {
+                style {
+                    alignment = Pos.CENTER
+                }
+            }
         }
     }
-
 
     private fun addAnimation() {
 
