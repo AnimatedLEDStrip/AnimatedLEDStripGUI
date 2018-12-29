@@ -2,16 +2,17 @@ import com.jfoenix.controls.JFXButton
 import com.jfoenix.controls.JFXColorPicker
 import javafx.event.EventHandler
 import javafx.geometry.Pos
+import javafx.scene.control.Label
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
+import javafx.scene.text.Font
 import tornadofx.*
 
 class ContinuousAnimationAddView : View() {
 
     private var centerVBox: VBox by singleAssign()
 
-    private var toggleReverse: JFXButton by singleAssign()
     private var altButton: JFXButton by singleAssign()
     private var mprButton: JFXButton by singleAssign()
     private var pxmButton: JFXButton by singleAssign()
@@ -30,6 +31,11 @@ class ContinuousAnimationAddView : View() {
     private var forwardButton: JFXButton by singleAssign()
     private var backwardButton: JFXButton by singleAssign()
 
+    private var colorSpacer1: Label by singleAssign()
+    private var colorSpacer2: Label by singleAssign()
+    private var colorSpacer3: Label by singleAssign()
+    private var colorSpacer4: Label by singleAssign()
+
     private val buttonGroupAnimations: List<JFXButton>
     private val buttonGroupColors1: List<Any>
     private val buttonGroupColors2: List<Any>
@@ -44,42 +50,88 @@ class ContinuousAnimationAddView : View() {
     init {
         centerVBox = VBox()
 
-        altButton = JFXButton("Alternate")
-        mprButton = JFXButton("Multi-Pixel Run")
-        pxmButton = JFXButton("Pixel Marathon")
-        pxrButton = JFXButton("Pixel Run")
-        pxrtButton = JFXButton("Pixel Run with Trail")
-        spkButton = JFXButton("Sparkle")
-        stoButton = JFXButton("Stack Overflow")
+        altButton = JFXButton("Alternate").apply {
+            setMinSize(50.0, 50.0)
+        }
+        mprButton = JFXButton("Multi-Pixel Run").apply {
+            setMinSize(50.0, 50.0)
+        }
+        pxmButton = JFXButton("Pixel Marathon").apply {
+            setMinSize(50.0, 50.0)
+        }
+        pxrButton = JFXButton("Pixel Run").apply {
+            setMinSize(50.0, 50.0)
+        }
+        pxrtButton = JFXButton("Pixel Run with Trail").apply {
+            setMinSize(50.0, 50.0)
+        }
+        spkButton = JFXButton("Sparkle").apply {
+            setMinSize(50.0, 50.0)
+        }
+        stoButton = JFXButton("Stack Overflow").apply {
+            setMinSize(50.0, 50.0)
+        }
 
         colorPicker1 = JFXColorPicker().apply {
             value = Color.BLACK
+            setMinSize(50.0, 50.0)
         }
         colorPicker2 = JFXColorPicker().apply {
             value = Color.BLACK
+            setMinSize(50.0, 50.0)
         }
         colorPicker3 = JFXColorPicker().apply {
             value = Color.BLACK
+            setMinSize(50.0, 50.0)
         }
         colorPicker4 = JFXColorPicker().apply {
             value = Color.BLACK
+            setMinSize(50.0, 50.0)
         }
         colorPicker5 = JFXColorPicker().apply {
             value = Color.BLACK
+            setMinSize(50.0, 50.0)
         }
-        colorPickerButton = JFXButton("Set Colors")
+        colorPickerButton = JFXButton("Set Colors").apply {
+            setMinSize(50.0, 50.0)
+        }
 
-        forwardButton = JFXButton("Forward")
-        backwardButton = JFXButton("Backward")
+        forwardButton = JFXButton("Forward").apply {
+            setMinSize(50.0, 50.0)
+        }
+        backwardButton = JFXButton("Backward").apply {
+            setMinSize(50.0, 50.0)
+        }
 
+
+        colorSpacer1 = Label().apply {
+            style {
+                font = Font(5.0)
+            }
+        }
+        colorSpacer2 = Label().apply {
+            style {
+                font = Font(5.0)
+            }
+        }
+        colorSpacer3 = Label().apply {
+            style {
+                font = Font(5.0)
+            }
+        }
+        colorSpacer4 = Label().apply {
+            style {
+                font = Font(5.0)
+            }
+        }
 
         buttonGroupAnimations = listOf(altButton, mprButton, pxmButton, pxrButton, pxrtButton, spkButton, stoButton)
 
         buttonGroupColors1 = listOf(colorPicker1, colorPickerButton)
-        buttonGroupColors2 = listOf(colorPicker1, colorPicker2, colorPickerButton)
-        buttonGroupColors3 = listOf(colorPicker1, colorPicker2, colorPicker3, colorPickerButton)
-        buttonGroupColors4 = listOf(colorPicker1, colorPicker2, colorPicker3, colorPicker4, colorPickerButton)
-        buttonGroupColors5 = listOf(colorPicker1, colorPicker2, colorPicker3, colorPicker4, colorPicker5, colorPickerButton)
+        buttonGroupColors2 = listOf(colorPicker1, colorSpacer1, colorPicker2, colorPickerButton)
+        buttonGroupColors3 = listOf(colorPicker1, colorSpacer1, colorPicker2, colorSpacer2, colorPicker3, colorPickerButton)
+        buttonGroupColors4 = listOf(colorPicker1, colorSpacer1, colorPicker2, colorSpacer2, colorPicker3, colorSpacer3, colorPicker4, colorPickerButton)
+        buttonGroupColors5 = listOf(colorPicker1, colorSpacer1, colorPicker2, colorSpacer2, colorPicker3, colorSpacer3, colorPicker4, colorSpacer4, colorPicker5, colorPickerButton)
 
         buttonGroupDirection = listOf(forwardButton, backwardButton)
 
@@ -207,12 +259,17 @@ class ContinuousAnimationAddView : View() {
 
 
     override val root = borderpane {
+
+        style {
+            backgroundColor += Color.ORANGE
+        }
+
         addExitAndBlankButtons(this)
 
         onKeyPressed = EventHandler { t ->
             when (t.code) {
-                KeyCode.RIGHT -> replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                KeyCode.LEFT -> replaceWith(ContinuousAnimationRemoveView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
+                KeyCode.RIGHT -> replaceWith(ContinuousAnimationRemoveView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+                KeyCode.LEFT -> replaceWith(InputDynamic::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
             }
         }
 

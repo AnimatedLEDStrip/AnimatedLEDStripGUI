@@ -72,7 +72,10 @@ class InputDynamic : View() {
 
         onKeyPressed = EventHandler { t ->
             when (t.code) {
-                KeyCode.RIGHT -> replaceWith(ContinuousAnimationRemoveView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+                KeyCode.RIGHT -> {
+//                    navigate(this@InputDynamic, SwipeDirection.RIGHT)
+                    replaceWith(ContinuousAnimationAddView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+                }
                 KeyCode.LEFT -> replaceWith(DefaultsView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
             }
         }

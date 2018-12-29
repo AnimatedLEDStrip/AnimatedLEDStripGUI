@@ -1,6 +1,8 @@
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
 import javafx.scene.layout.VBox
+import javafx.scene.paint.Color
+import javafx.scene.text.Font
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tornadofx.*
@@ -33,7 +35,11 @@ object MessageSender {
                 animations += JFXButton(
                         "${animationData["Animation"]}: ID ${input["ID"].toString()}"
                 ).apply {
-                    alignment = Pos.CENTER
+                    style {
+                        alignment = Pos.CENTER
+                        backgroundColor += ColorContainer(animationData["Color1"] as Long).toColor()
+                        font = Font.font(12.0)
+                    }
                     val id = input["ID"].toString()
                     action {
                         GlobalScope.launch {
@@ -55,4 +61,3 @@ object MessageSender {
         animationComplete = false
     }
 }
-
