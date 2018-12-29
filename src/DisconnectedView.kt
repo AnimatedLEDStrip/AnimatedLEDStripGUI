@@ -9,10 +9,6 @@ class DisconnectedView : View() {
 
     override val root = borderpane {
 
-        onTouchPressed = EventHandler {
-            wakeScreen()
-        }
-
         val backColor = Color.RED
 
         style {
@@ -24,22 +20,8 @@ class DisconnectedView : View() {
             font = Font.font(60.0)
             alignment = Pos.CENTER
         }
+
         addExitAndBlankButtons(this)
-//        top {
-//            borderpane {
-//                right {
-//
-//                    this += JFXButton("Exit").apply {
-//                        alignment = Pos.CENTER_RIGHT
-//                        font = Font.font(15.0)
-////                useMaxSize = true
-//                        action {
-//                            shutdownGUI()
-//                        }
-//                    }
-//                }
-//            }
-//        }
 
         bottom {
             gridpane {

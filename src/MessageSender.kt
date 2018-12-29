@@ -16,7 +16,6 @@ object MessageSender {
     private var out: ObjectOutputStream? = null
     private var socIn: ObjectInputStream? = null
     private var disconnected = true
-    private var animationComplete = false
     private var connectionTries = 0
 
     init {
@@ -69,6 +68,7 @@ object MessageSender {
             socket.connect(InetSocketAddress(ipAddress, 5), 5000)
             println("Connected to server at $ipAddress")
             disconnected = false
+            connectionTries = 0
         } catch (e: Exception) {
             connectionTries++
             println("Connection attempt $connectionTries: Server not found at $ipAddress: $e")
@@ -94,8 +94,4 @@ object MessageSender {
 
     fun isDisconnected() = disconnected
 
-    fun isAnimationComplete() = animationComplete
-    fun resetAnimationComplete() {
-        animationComplete = false
-    }
 }

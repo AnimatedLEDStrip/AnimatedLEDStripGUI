@@ -1,4 +1,5 @@
 import com.jfoenix.controls.JFXButton
+import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.layout.BorderPane
 import javafx.scene.text.Font
@@ -41,5 +42,12 @@ fun addExitAndBlankButtons(pane: BorderPane) {
                 }
             }
         }
+    }
+
+    /*  Create EventHandler for touch event
+    *   Tells screen to wake up, solving issue of screen not waking normally due to GUI
+    */
+    pane.onTouchPressed = EventHandler {
+        wakeScreen()
     }
 }
