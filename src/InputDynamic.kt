@@ -41,7 +41,7 @@ class InputDynamic : View() {
     }
 
     private fun sendSTC(color: String) {
-        MessageSender.send(mapOf("Animation" to Animations.SPARKLE, "Color1" to parseHex(color), "Continuous" to true))
+        MessageSender.send(mapOf("Animation" to Animations.SPARKLETOCOLOR, "Color1" to parseHex(color), "Continuous" to true))
         changeColor()
     }
 
