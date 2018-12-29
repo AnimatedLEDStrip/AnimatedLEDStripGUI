@@ -1,5 +1,6 @@
 import com.jfoenix.controls.JFXButton
 import com.jfoenix.controls.JFXColorPicker
+import javafx.animation.Animation
 import javafx.event.EventHandler
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.VBox
@@ -26,15 +27,19 @@ class ContinuousAnimationAddView : View() {
     private var colorPicker5: JFXColorPicker by singleAssign()
     private var colorPickerButton: JFXButton by singleAssign()
 
+    private var forwardButton: JFXButton by singleAssign()
+    private var backwardButton: JFXButton by singleAssign()
+
     private val buttonGroupAnimations: List<JFXButton>
     private val buttonGroupColors1: List<Any>
     private val buttonGroupColors2: List<Any>
     private val buttonGroupColors3: List<Any>
     private val buttonGroupColors4: List<Any>
     private val buttonGroupColors5: List<Any>
+    private val buttonGroupDirection: List<JFXButton>
 
 
-    private val animationBuilder = mutableMapOf<String, Any>()
+    private var animationBuilder = mutableMapOf<String, Any>("Continuous" to true)
 
     init {
         centerVBox = VBox()
@@ -64,6 +69,10 @@ class ContinuousAnimationAddView : View() {
         }
         colorPickerButton = JFXButton("Set Colors")
 
+        forwardButton = JFXButton("Forward")
+        backwardButton = JFXButton("Backward")
+
+
         buttonGroupAnimations = listOf(altButton, mprButton, pxmButton, pxrButton, pxrtButton, spkButton, stoButton)
 
         buttonGroupColors1 = listOf(colorPicker1, colorPickerButton)
@@ -72,7 +81,8 @@ class ContinuousAnimationAddView : View() {
         buttonGroupColors4 = listOf(colorPicker1, colorPicker2, colorPicker3, colorPicker4, colorPickerButton)
         buttonGroupColors5 = listOf(colorPicker1, colorPicker2, colorPicker3, colorPicker4, colorPicker5, colorPickerButton)
 
-        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
+        buttonGroupDirection = listOf(forwardButton, backwardButton)
+
 
         altButton.apply {
             action {
@@ -124,18 +134,80 @@ class ContinuousAnimationAddView : View() {
             }
         }
 
+
         colorPickerButton.apply {
             action {
-                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupColors5)
+                when (animationBuilder["Animation"] as Animations) {
+                    Animations.SPARKLE -> {
+                        animationBuilder["Color1"] = colorPicker1.value.getHex().toLong(16)
+                    }
+                    Animations.ALTERNATE,
+                    Animations.MULTIPIXELRUN,
+                    Animations.PIXELRUN,
+                    Animations.PIXELRUNWITHTRAIL,
+                    Animations.STACKOVERFLOW -> {
+                        animationBuilder["Color1"] = colorPicker1.value.getHex().toLong(16)
+                        animationBuilder["Color2"] = colorPicker2.value.getHex().toLong(16)
+                    }
+                    Animations.PIXELMARATHON -> {
+                        animationBuilder["Color1"] = colorPicker1.value.getHex().toLong(16)
+                        animationBuilder["Color2"] = colorPicker2.value.getHex().toLong(16)
+                        animationBuilder["Color3"] = colorPicker3.value.getHex().toLong(16)
+                        animationBuilder["Color4"] = colorPicker4.value.getHex().toLong(16)
+                        animationBuilder["Color5"] = colorPicker5.value.getHex().toLong(16)
+                    }
+                    Animations.SMOOTHCHASE -> TODO()
+                }
+
+                when (animationBuilder["Animation"] as Animations) {
+                    Animations.ALTERNATE,
+                    Animations.SPARKLE,
+                    Animations.STACKOVERFLOW,
+                    Animations.PIXELMARATHON -> {
+                        this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupColors5)
+                        MessageSender.send(animationBuilder)
+
+                        animationBuilder = mutableMapOf<String, Any>("Continuous" to true)
+
+                        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
+                    }
+                    Animations.MULTIPIXELRUN,
+                    Animations.PIXELRUN,
+                    Animations.PIXELRUNWITHTRAIL -> {
+                        this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupColors5)
+                        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
+                    }
+                }
+
             }
         }
+
+
+        buttonGroupDirection.forEach {
+            it.apply {
+                action {
+                    animationBuilder["Direction"] = when (it.text) {
+                        "Forward" -> 'F'
+                        "Backward" -> 'B'
+                        else -> 'F'
+                    }
+                    this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupDirection)
+                    MessageSender.send(animationBuilder)
+
+                    animationBuilder = mutableMapOf<String, Any>("Continuous" to true)
+
+                    this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
+                }
+            }
+        }
+
+        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
 
     }
 
 
-
     override val root = borderpane {
-//        addExitAndBlankButtons(this)
+        addExitAndBlankButtons(this)
 
         onKeyPressed = EventHandler { t ->
             when (t.code) {
