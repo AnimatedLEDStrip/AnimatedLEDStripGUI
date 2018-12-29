@@ -18,6 +18,7 @@ class ContinuousAnimationAddView : View() {
     private var pxmButton: JFXButton by singleAssign()
     private var pxrButton: JFXButton by singleAssign()
     private var pxrtButton: JFXButton by singleAssign()
+    private var schButton: JFXButton by singleAssign()
     private var spkButton: JFXButton by singleAssign()
     private var stoButton: JFXButton by singleAssign()
 
@@ -36,6 +37,10 @@ class ContinuousAnimationAddView : View() {
     private var colorSpacer3: Label by singleAssign()
     private var colorSpacer4: Label by singleAssign()
 
+    private var multiColorPicker: JFXColorPicker by singleAssign()
+    private var multiColorPickerButton: JFXButton by singleAssign()
+    private var multiColorPickerCompleteButton: JFXButton by singleAssign()
+
     private val buttonGroupAnimations: List<JFXButton>
     private val buttonGroupColors1: List<Any>
     private val buttonGroupColors2: List<Any>
@@ -43,6 +48,9 @@ class ContinuousAnimationAddView : View() {
     private val buttonGroupColors4: List<Any>
     private val buttonGroupColors5: List<Any>
     private val buttonGroupDirection: List<JFXButton>
+    private val buttonGroupMultiColor: List<Any>
+
+    private var multiColorList: MutableList<Long>
 
 
     private var animationBuilder = mutableMapOf<String, Any>("Continuous" to true)
@@ -63,6 +71,9 @@ class ContinuousAnimationAddView : View() {
             setMinSize(50.0, 50.0)
         }
         pxrtButton = JFXButton("Pixel Run with Trail").apply {
+            setMinSize(50.0, 50.0)
+        }
+        schButton = JFXButton("Smooth Chase").apply {
             setMinSize(50.0, 50.0)
         }
         spkButton = JFXButton("Sparkle").apply {
@@ -103,6 +114,17 @@ class ContinuousAnimationAddView : View() {
             setMinSize(50.0, 50.0)
         }
 
+        multiColorPicker = JFXColorPicker().apply {
+            value = Color.BLACK
+            setMinSize(50.0, 50.0)
+        }
+        multiColorPickerButton = JFXButton("Add Color").apply {
+            setMinSize(50.0, 50.0)
+        }
+        multiColorPickerCompleteButton = JFXButton("Send Colors").apply {
+            setMinSize(50.0, 50.0)
+        }
+
 
         colorSpacer1 = Label().apply {
             style {
@@ -125,7 +147,7 @@ class ContinuousAnimationAddView : View() {
             }
         }
 
-        buttonGroupAnimations = listOf(altButton, mprButton, pxmButton, pxrButton, pxrtButton, spkButton, stoButton)
+        buttonGroupAnimations = listOf(altButton, mprButton, pxmButton, pxrButton, pxrtButton, schButton, spkButton, stoButton)
 
         buttonGroupColors1 = listOf(colorPicker1, colorPickerButton)
         buttonGroupColors2 = listOf(colorPicker1, colorSpacer1, colorPicker2, colorPickerButton)
@@ -135,6 +157,9 @@ class ContinuousAnimationAddView : View() {
 
         buttonGroupDirection = listOf(forwardButton, backwardButton)
 
+        buttonGroupMultiColor = listOf(multiColorPicker, colorSpacer1, multiColorPickerButton, colorSpacer2, multiColorPickerCompleteButton)
+
+        multiColorList = mutableListOf()
 
         altButton.apply {
             action {
@@ -169,6 +194,13 @@ class ContinuousAnimationAddView : View() {
                 animationBuilder["Animation"] = Animations.PIXELRUNWITHTRAIL
                 this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
                 this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors2)
+            }
+        }
+        schButton.apply {
+            action {
+                animationBuilder["Animation"] = Animations.SMOOTHCHASE
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupMultiColor)
             }
         }
         spkButton.apply {
@@ -247,8 +279,35 @@ class ContinuousAnimationAddView : View() {
                     MessageSender.send(animationBuilder)
 
                     animationBuilder = mutableMapOf<String, Any>("Continuous" to true)
+                    multiColorList = mutableListOf()
 
                     this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
+                }
+            }
+        }
+
+        multiColorPickerButton.apply {
+            action {
+                multiColorList.add(multiColorPicker.value.getHex().toLong(16))
+            }
+        }
+
+        multiColorPickerCompleteButton.apply {
+            action {
+                when (animationBuilder["Animation"] as Animations) {
+                    Animations.SPARKLE,
+                    Animations.ALTERNATE,
+                    Animations.MULTIPIXELRUN,
+                    Animations.PIXELRUN,
+                    Animations.PIXELRUNWITHTRAIL,
+                    Animations.STACKOVERFLOW,
+                    Animations.PIXELMARATHON -> TODO()
+                    Animations.SMOOTHCHASE -> {
+                        animationBuilder["Color1"] = multiColorList[0]
+                        animationBuilder["ColorList"] = multiColorList
+                        this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupMultiColor)
+                        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
+                    }
                 }
             }
         }
