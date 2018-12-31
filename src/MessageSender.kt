@@ -1,3 +1,5 @@
+import animatedledstrip.leds.Animations
+import animatedledstrip.leds.ColorContainer
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
 import javafx.scene.layout.VBox

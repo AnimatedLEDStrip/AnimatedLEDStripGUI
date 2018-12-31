@@ -1,3 +1,6 @@
+import animatedledstrip.ccpresets.CCPresets
+import animatedledstrip.leds.Animations
+import animatedledstrip.leds.Direction
 import com.jfoenix.controls.JFXButton
 import javafx.event.EventHandler
 import javafx.geometry.Pos

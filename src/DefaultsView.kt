@@ -1,3 +1,4 @@
+import animatedledstrip.leds.Animations
 import com.jfoenix.controls.JFXButton
 import com.jfoenix.controls.JFXSlider
 import com.jfoenix.controls.JFXToggleButton
