@@ -1,6 +1,7 @@
 # LED_GUI
 
-## Uses Java 8:
+## Uses Java 8
+Because of a requirement in the [JFoenix](https://github.com/jfoenixadmin/JFoenix) library, we must use Java 8
 > https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html
 
 ## Dependencies (Maven Coordinates):
