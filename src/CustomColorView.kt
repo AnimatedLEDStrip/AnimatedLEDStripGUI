@@ -1,10 +1,8 @@
 import animatedledstrip.leds.Animations
 import animatedledstrip.leds.Direction
 import com.jfoenix.controls.JFXButton
-import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.control.Label
-import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import javafx.scene.paint.Color.*
 import javafx.scene.text.Font
@@ -21,6 +19,7 @@ class CustomColorView : View() {
     private var selectedDirection = Direction.FORWARD
     private var colorName: Label by singleAssign()
 
+    private val defaultColorColumn = listOf(Color.BLACK, Color.BLUE, Color.AQUA, Color.LIME, Color.YELLOW, Color.RED, Color.MAGENTA)
 
     private val colorRow1 = listOf(
             Color.ALICEBLUE,
@@ -392,6 +391,15 @@ class CustomColorView : View() {
             YELLOWGREEN to "Yellow Green"
     )
 
+    init {
+        colorButton = JFXButton("Color")
+        stcButton = JFXButton("STC")
+        wipeButton = JFXButton("Wipe")
+        mtcButton = JFXButton("MTC")
+    }
+
+    private val sendButtonList = listOf(colorButton, stcButton, wipeButton, mtcButton)
+
     /*  Helper functions for sending commands */
     private fun sendC(color: String) =
             MessageSender.send(mapOf("Animation" to Animations.COLOR, "Color1" to parseHex(color)))
@@ -437,13 +445,11 @@ class CustomColorView : View() {
                     useMaxHeight = true
                 }
                 gridpane {
-                    alignment = Pos.CENTER_LEFT
-                    colorRows.forEach { list ->
-                        row {
-                            alignment = Pos.CENTER_LEFT
-                            list.forEach { color ->
+                    row {
+                        vbox {
+                            defaultColorColumn.forEach { color ->
                                 this += JFXButton().apply {
-                                    setMinSize(35.0, 35.0)
+                                    setMinSize(45.0, 50.0)
                                     alignment = Pos.CENTER
 
                                     style {
@@ -451,32 +457,13 @@ class CustomColorView : View() {
                                     }
                                     action {
                                         selectedColor = color
-                                        colorButton.apply {
-                                            style {
-                                                backgroundColor += color
-                                                if (darkColors.contains(color)) textFill = Color.WHITE
-                                                alignment = Pos.CENTER
-                                            }
-                                        }
-                                        stcButton.apply {
-                                            style {
-                                                backgroundColor += color
-                                                if (darkColors.contains(color)) textFill = Color.WHITE
-                                                alignment = Pos.CENTER
-                                            }
-                                        }
-                                        wipeButton.apply {
-                                            style {
-                                                backgroundColor += color
-                                                if (darkColors.contains(color)) textFill = Color.WHITE
-                                                alignment = Pos.CENTER
-                                            }
-                                        }
-                                        mtcButton.apply {
-                                            style {
-                                                backgroundColor += color
-                                                if (darkColors.contains(color)) textFill = Color.WHITE
-                                                alignment = Pos.CENTER
+                                        sendButtonList.forEach { b ->
+                                            b.apply {
+                                                style {
+                                                    backgroundColor += color
+                                                    if (darkColors.contains(color)) textFill = Color.WHITE
+                                                    alignment = Pos.CENTER
+                                                }
                                             }
                                         }
                                         toggleReverse.apply {
@@ -491,6 +478,44 @@ class CustomColorView : View() {
                                 }
                             }
                         }
+                        gridpane {
+                            alignment = Pos.CENTER_LEFT
+                            colorRows.forEach { list ->
+                                row {
+                                    alignment = Pos.CENTER_LEFT
+                                    list.forEach { color ->
+                                        this += JFXButton().apply {
+                                            setMinSize(35.0, 35.0)
+                                            alignment = Pos.CENTER
+
+                                            style {
+                                                backgroundColor += color
+                                            }
+                                            action {
+                                                selectedColor = color
+                                                sendButtonList.forEach { b ->
+                                                    b.apply {
+                                                        style {
+                                                            backgroundColor += color
+                                                            if (darkColors.contains(color)) textFill = Color.WHITE
+                                                            alignment = Pos.CENTER
+                                                        }
+                                                    }
+                                                }
+                                                toggleReverse.apply {
+                                                    style {
+                                                        backgroundColor += color
+                                                        if (darkColors.contains(color)) textFill = Color.WHITE
+                                                        alignment = Pos.CENTER
+                                                    }
+                                                }
+                                                colorName.text = colorNames[color]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -498,6 +523,8 @@ class CustomColorView : View() {
 
         left {
             vbox {
+
+
                 useMaxHeight = true
                 alignment = Pos.CENTER_LEFT
                 label {
@@ -508,8 +535,8 @@ class CustomColorView : View() {
                 toggleReverse = JFXButton()
                 this += toggleReverse.apply {
                     alignment = Pos.CENTER_LEFT
-                    setMinSize(125.0, 50.0)
-                    setMaxSize(125.0, 50.0)
+                    setMinSize(75.0, 50.0)
+                    setMaxSize(75.0, 50.0)
                     style {
                         backgroundColor += selectedColor
                         alignment = Pos.CENTER
@@ -534,80 +561,30 @@ class CustomColorView : View() {
                         }
                     }
                 }
-                label {
-                    style {
-                        font = Font(5.0)
+
+                sendButtonList.forEach { b ->
+                    label {
+                        style {
+                            font = Font(5.0)
+                        }
                     }
-                }
-                colorButton = JFXButton("Color")
-                this += colorButton.apply {
-                    alignment = Pos.CENTER_LEFT
-                    useMaxSize = true
-                    setMinSize(125.0, 50.0)
-                    setMaxSize(125.0, 50.0)
-                    style {
-                        backgroundColor += selectedColor
-                        alignment = Pos.CENTER
-                    }
-                    action {
-                        sendC(selectedColor.getHex())
-                    }
-                }
-                label {
-                    style {
-                        font = Font(5.0)
-                    }
-                }
-                stcButton = JFXButton("STC")
-                this += stcButton.apply {
-                    alignment = Pos.CENTER_LEFT
-                    useMaxSize = true
-                    setMinSize(125.0, 50.0)
-                    setMaxSize(125.0, 50.0)
-                    style {
-                        backgroundColor += selectedColor
-                        alignment = Pos.CENTER
-                    }
-                    action {
-                        sendSTC(selectedColor.getHex())
-                    }
-                }
-                label {
-                    style {
-                        font = Font(5.0)
-                    }
-                }
-                wipeButton = JFXButton("Wipe")
-                this += wipeButton.apply {
-                    alignment = Pos.CENTER_LEFT
-                    useMaxSize = true
-                    setMinSize(125.0, 50.0)
-                    setMaxSize(125.0, 50.0)
-                    style {
-                        backgroundColor += selectedColor
-                        alignment = Pos.CENTER
-                    }
-                    action {
-                        sendWIP(selectedColor.getHex())
-                    }
-                }
-                label {
-                    style {
-                        font = Font(5.0)
-                    }
-                }
-                mtcButton = JFXButton("MTC")
-                this += mtcButton.apply {
-                    alignment = Pos.CENTER_LEFT
-                    useMaxSize = true
-                    setMinSize(125.0, 50.0)
-                    setMaxSize(125.0, 50.0)
-                    style {
-                        backgroundColor += selectedColor
-                        alignment = Pos.CENTER
-                    }
-                    action {
-                        sendMTC(selectedColor.getHex())
+                    this += b.apply {
+                        alignment = Pos.CENTER_LEFT
+                        useMaxSize = true
+                        setMinSize(75.0, 50.0)
+                        setMaxSize(75.0, 50.0)
+                        style {
+                            backgroundColor += selectedColor
+                            alignment = Pos.CENTER
+                        }
+                        action {
+                            when (b) {
+                                colorButton -> sendC(selectedColor.getHex())
+                                stcButton -> sendSTC(selectedColor.getHex())
+                                wipeButton -> sendWIP(selectedColor.getHex())
+                                mtcButton -> sendMTC(selectedColor.getHex())
+                            }
+                        }
                     }
                 }
             }

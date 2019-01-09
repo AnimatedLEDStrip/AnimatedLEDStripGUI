@@ -52,8 +52,8 @@ class MyApp : App(DisconnectedView::class, SliderStylesheet::class) {
         super.start(stage)
         stage.isFullScreen = isFullscreen
         if (!isFullscreen) {
-            stage.minHeight = 600.0
-            stage.minWidth = 500.0
+            stage.minHeight = 480.0
+            stage.minWidth = 800.0
         }
 
         try {
