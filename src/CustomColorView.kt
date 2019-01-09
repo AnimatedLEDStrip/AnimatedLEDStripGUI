@@ -394,7 +394,7 @@ class CustomColorView : View() {
 
     /*  Helper functions for sending commands */
     private fun sendC(color: String) =
-            MessageSender.send(mapOf("Animation" to Animations.COLOR1, "Color1" to parseHex(color)))
+            MessageSender.send(mapOf("Animation" to Animations.COLOR, "Color1" to parseHex(color)))
 
     private fun sendWIP(color: String) {
         val direction = when (selectedDirection) {

@@ -30,7 +30,7 @@ class InputDynamic : View() {
     }
 
     private fun sendC(color: String) {
-        MessageSender.send(mapOf("Animation" to Animations.COLOR1, "Color1" to parseHex(color)))
+        MessageSender.send(mapOf("Animation" to Animations.COLOR, "Color1" to parseHex(color)))
         changeColor()
     }
 
