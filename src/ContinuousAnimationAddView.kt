@@ -1,10 +1,8 @@
 import animatedledstrip.leds.Animations
 import com.jfoenix.controls.JFXButton
 import com.jfoenix.controls.JFXColorPicker
-import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.control.Label
-import javafx.scene.input.KeyCode
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.text.Font

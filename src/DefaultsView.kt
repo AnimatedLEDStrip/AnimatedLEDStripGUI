@@ -2,13 +2,8 @@ import animatedledstrip.leds.Animations
 import com.jfoenix.controls.JFXButton
 import com.jfoenix.controls.JFXSlider
 import com.jfoenix.controls.JFXToggleButton
-import javafx.event.EventHandler
 import javafx.geometry.Pos
-import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
-import org.apache.commons.exec.CommandLine
-import org.apache.commons.exec.DefaultExecutor
 import tornadofx.*
 
 /*  Main view for controlling colors

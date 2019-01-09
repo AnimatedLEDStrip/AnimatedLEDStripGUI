@@ -58,7 +58,7 @@ object MessageSender {
                     }
                 }
             } catch (e: Exception) {
-                println("Connection Lost: $e")
+                println("Connection Lost: ${e.stackTrace}")
                 socket = Socket()
                 disconnected = true
             }

@@ -1,6 +1,4 @@
-import javafx.event.EventHandler
 import javafx.geometry.Pos
-import javafx.scene.input.KeyCode
 import tornadofx.*
 
 class ContinuousAnimationRemoveView : View() {

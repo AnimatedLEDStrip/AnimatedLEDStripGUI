@@ -1,5 +1,4 @@
 import com.jfoenix.controls.JFXButton
-import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.paint.Color
 import javafx.scene.text.Font

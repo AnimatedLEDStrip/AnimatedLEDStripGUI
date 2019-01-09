@@ -51,7 +51,10 @@ class MyApp : App(DisconnectedView::class, SliderStylesheet::class) {
     override fun start(stage: Stage) {
         super.start(stage)
         stage.isFullScreen = isFullscreen
-        stage.minHeight = 600.0
+        if (!isFullscreen) {
+            stage.minHeight = 600.0
+            stage.minWidth = 500.0
+        }
 
         try {
             val commandLine = CommandLine.parse("xset -d :0 s 30")

@@ -2,8 +2,6 @@ import com.jfoenix.controls.JFXButton
 import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.text.Font
-import org.apache.commons.exec.CommandLine
-import org.apache.commons.exec.DefaultExecutor
 import tornadofx.*
 
 class InputStatic : View() {
