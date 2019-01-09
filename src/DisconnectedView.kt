@@ -31,7 +31,7 @@ class DisconnectedView : View() {
                     this += JFXButton("Connect (Max)").apply {
                         alignment = Pos.CENTER
                         buttonType = JFXButton.ButtonType.RAISED
-                        font = Font.font(35.0)
+                        font = Font.font(25.0)
                         useMaxSize = true
                         action {
                             ipAddress = "10.44.157.2"
@@ -51,7 +51,7 @@ class DisconnectedView : View() {
                     this += JFXButton("Connect (Katie)").apply {
                         alignment = Pos.CENTER
                         buttonType = JFXButton.ButtonType.RAISED
-                        font = Font.font(35.0)
+                        font = Font.font(25.0)
                         useMaxSize = true
                         action {
                             ipAddress = "10.44.103.233"
@@ -71,7 +71,7 @@ class DisconnectedView : View() {
                     this += JFXButton("Connect (Local)").apply {
                         alignment = Pos.CENTER
                         buttonType = JFXButton.ButtonType.RAISED
-                        font = Font.font(35.0)
+                        font = Font.font(25.0)
                         useMaxSize = true
                         action {
                             ipAddress = "localhost"
