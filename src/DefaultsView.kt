@@ -59,21 +59,6 @@ class DefaultsView : View() {
     /*  GUI */
     override val root = borderpane {
 
-        /*  Create EventHandlers for swipe events */
-        onSwipeLeft = EventHandler {
-            replaceWith(InputDynamic::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-        }
-
-        onSwipeRight = EventHandler {
-            replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-        }
-
-        onKeyPressed = EventHandler { t ->
-            when (t.code) {
-                KeyCode.RIGHT -> replaceWith(InputDynamic::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                KeyCode.LEFT -> replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-            }
-        }
 
         /*  Set style of whole GUI
         *   Sets background color
@@ -83,7 +68,7 @@ class DefaultsView : View() {
         }
 
         addExitAndBlankButtons(this)
-
+        addNavigation(this@DefaultsView::class, this@DefaultsView, this)
 
         /*  Main section of GUI */
         center {

@@ -8,12 +8,8 @@ class ContinuousAnimationRemoveView : View() {
     override val root = borderpane {
 
         addExitAndBlankButtons(this)
-        onKeyPressed = EventHandler { t ->
-            when (t.code) {
-                KeyCode.RIGHT -> replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                KeyCode.LEFT -> replaceWith(ContinuousAnimationAddView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-            }
-        }
+        addNavigation(this@ContinuousAnimationRemoveView::class, this@ContinuousAnimationRemoveView, this)
+
         center {
             scrollpane {
 
@@ -26,12 +22,8 @@ class ContinuousAnimationRemoveView : View() {
                         alignment = Pos.CENTER
                     }
                 }
-                onKeyPressed = EventHandler { t ->
-                    when (t.code) {
-                        KeyCode.RIGHT -> replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                        KeyCode.LEFT -> replaceWith(ContinuousAnimationAddView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-                    }
-                }
+                addNavigation(this@ContinuousAnimationRemoveView::class, this@ContinuousAnimationRemoveView, this)
+
             }
         }
     }

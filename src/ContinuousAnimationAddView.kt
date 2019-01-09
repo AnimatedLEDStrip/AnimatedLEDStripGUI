@@ -325,13 +325,7 @@ class ContinuousAnimationAddView : View() {
         }
 
         addExitAndBlankButtons(this)
-
-        onKeyPressed = EventHandler { t ->
-            when (t.code) {
-                KeyCode.RIGHT -> replaceWith(ContinuousAnimationRemoveView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                KeyCode.LEFT -> replaceWith(InputDynamic::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-            }
-        }
+        addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
 
         center {
             this += centerVBox.apply {

@@ -61,28 +61,6 @@ class InputDynamic : View() {
 
     override val root = borderpane {
 
-        onSwipeLeft = EventHandler {
-            replaceWith(CustomColorView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-        }
-
-        onSwipeRight = EventHandler {
-            replaceWith(DefaultsView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-        }
-
-        onTouchPressed = EventHandler {
-            wakeScreen()
-        }
-
-        onKeyPressed = EventHandler { t ->
-            when (t.code) {
-                KeyCode.RIGHT -> {
-//                    navigate(this@InputDynamic, SwipeDirection.RIGHT)
-                    replaceWith(ContinuousAnimationAddView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                }
-                KeyCode.LEFT -> replaceWith(DefaultsView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-            }
-        }
-
         val backColor = javafx.scene.paint.Color.AQUAMARINE
 
         style {
@@ -90,6 +68,7 @@ class InputDynamic : View() {
         }
 
         addExitAndBlankButtons(this)
+        addNavigation(this@InputDynamic::class, this@InputDynamic, this)
 
         center {
             vbox {

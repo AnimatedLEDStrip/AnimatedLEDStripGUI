@@ -416,29 +416,14 @@ class CustomColorView : View() {
     }
 
 
-
     override val root = borderpane {
 
         style {
             backgroundColor += Color.GRAY
         }
 
-        onSwipeRight = EventHandler {
-            replaceWith(InputDynamic::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-        }
-
-        onSwipeLeft = EventHandler {
-            replaceWith(DefaultsView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-        }
-
-        onKeyPressed = EventHandler { t ->
-            when (t.code) {
-                KeyCode.RIGHT -> replaceWith(DefaultsView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                KeyCode.LEFT -> replaceWith(ContinuousAnimationRemoveView::class, ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-            }
-        }
-
-       addExitAndBlankButtons(this)
+        addExitAndBlankButtons(this)
+        addNavigation(this@CustomColorView::class, this@CustomColorView, this)
 
         right {
             hbox {
