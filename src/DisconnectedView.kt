@@ -27,7 +27,7 @@ class DisconnectedView : View() {
                 row {
                     alignment = Pos.CENTER
                     useMaxSize = true
-                    this += JFXButton("Connect (Max)").apply {
+                    this += JFXButton("Connect (Pi 1)").apply {
                         alignment = Pos.CENTER
                         buttonType = JFXButton.ButtonType.RAISED
                         font = Font.font(25.0)
@@ -47,7 +47,7 @@ class DisconnectedView : View() {
                             }
                         }
                     }
-                    this += JFXButton("Connect (Katie)").apply {
+                    this += JFXButton("Connect (Pi 2)").apply {
                         alignment = Pos.CENTER
                         buttonType = JFXButton.ButtonType.RAISED
                         font = Font.font(25.0)

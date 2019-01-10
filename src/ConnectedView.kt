@@ -36,7 +36,7 @@ class ConnectedView : View() {
         super.onDock()
         this.run {
             runLater(1.0.seconds) {
-                replaceWith(DefaultsView::class, ViewTransition.Fade(1.0.seconds))
+                replaceWith(CustomColorView::class, ViewTransition.Fade(1.0.seconds))
             }
         }
     }
