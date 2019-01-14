@@ -1,3 +1,4 @@
+import animatedledstrip.client.AnimationSenderFactory
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
 import javafx.scene.paint.Color
@@ -36,22 +37,22 @@ class ConnectingView : View() {
         super.onDock()
         this.run {
             runLater(5.0.seconds) {
-                if (!MessageSender.isDisconnected())
+                if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                     replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                 else runLater(5.0.seconds) {
-                    if (!MessageSender.isDisconnected())
+                    if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                     else runLater(5.0.seconds) {
-                        if (!MessageSender.isDisconnected())
+                        if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                             replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                         else runLater(5.0.seconds) {
-                            if (!MessageSender.isDisconnected())
+                            if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                                 replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                             else runLater(5.0.seconds) {
-                                if (!MessageSender.isDisconnected())
+                                if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                                     replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                                 else runLater(5.0.seconds) {
-                                    if (!MessageSender.isDisconnected())
+                                    if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                                 }
                             }

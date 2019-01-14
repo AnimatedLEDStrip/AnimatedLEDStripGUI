@@ -1,5 +1,6 @@
 import animatedledstrip.ccpresets.CCPresets
-import animatedledstrip.leds.Animations
+import animatedledstrip.client.AnimationData
+import animatedledstrip.leds.Animation
 import animatedledstrip.leds.Direction
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
@@ -28,34 +29,38 @@ class InputDynamic : View() {
     }
 
     private fun sendC(color: String) {
-        MessageSender.send(mapOf("Animation" to Animations.COLOR, "Color1" to parseHex(color)))
+        AnimationData().animation(Animation.COLOR).color(color).send()
+//        MessageSender.send(mapOf("Animation" to Animations.COLOR, "Color1" to parseHex(color)))
         changeColor()
     }
 
     private fun sendWIP(color: String) {
-        val direction = when (selectedDirection) {
-            Direction.BACKWARD -> 'B'
-            Direction.FORWARD -> 'F'
-        }
-        MessageSender.send(mapOf("Animation" to Animations.WIPE, "Color1" to parseHex(color), "Direction" to direction))
+//        val direction = when (selectedDirection) {
+//            Direction.BACKWARD -> 'B'
+//            Direction.FORWARD -> 'F'
+//        }
+        AnimationData().animation(Animation.WIPE).color(color).direction(selectedDirection).send()
+//        MessageSender.send(mapOf("Animation" to Animations.WIPE, "Color1" to parseHex(color), "Direction" to direction))
         changeColor()
     }
 
     private fun sendSTC(color: String) {
-        MessageSender.send(mapOf("Animation" to Animations.SPARKLETOCOLOR, "Color1" to parseHex(color), "Continuous" to true))
+        AnimationData().animation(Animation.SPARKLETOCOLOR).color(color).send()
+//        MessageSender.send(mapOf("Animation" to Animations.SPARKLETOCOLOR, "Color1" to parseHex(color), "Continuous" to true))
         changeColor()
     }
 
     private fun sendMTC(color: String) {
-        val direction = when (selectedDirection) {
-            Direction.BACKWARD -> 'B'
-            Direction.FORWARD -> 'F'
-        }
-        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUNTOCOLOR, "Color1" to parseHex(color), "Direction" to direction, "Continuous" to true))
+//        val direction = when (selectedDirection) {
+//            Direction.BACKWARD -> 'B'
+//            Direction.FORWARD -> 'F'
+//        }
+        AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(color).direction(selectedDirection).send()
+//        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUNTOCOLOR, "Color1" to parseHex(color), "Direction" to direction, "Continuous" to true))
         changeColor()
     }
 
-    private fun sendPixelMarathon(color: String) = MessageSender.send(mapOf("Animation" to Animations.PIXELMARATHON, "Color1" to parseHex(color)))
+//    private fun sendPixelMarathon(color: String) = MessageSender.send(mapOf("Animation" to Animations.PIXELMARATHON, "Color1" to parseHex(color)))
 
     override val root = borderpane {
 
@@ -72,12 +77,6 @@ class InputDynamic : View() {
             vbox {
                 alignment = Pos.CENTER
 
-                this += JFXButton("Pixel Marathon").apply {
-                    alignment = Pos.CENTER
-                    action {
-                        sendPixelMarathon(Color.RED.getHex())
-                    }
-                }
                 label {
                     style {
                         font = Font(5.0)

@@ -36,9 +36,9 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "10.44.157.2"
                             try {
-                                AnimationSenderFactory.create(ipAddress = ipAddress).setAsDefaultSender()
+                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress).start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
-                                    if (!MessageSender.isDisconnected())
+                                    if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                                     else
                                         replaceWith(ConnectingView::class, ViewTransition.Fade(1.0.seconds))
@@ -56,9 +56,9 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "10.44.103.233"
                             try {
-                                AnimationSenderFactory.create(ipAddress = ipAddress).setAsDefaultSender()
+                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress).start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
-                                    if (!MessageSender.isDisconnected())
+                                    if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                                     else
                                         replaceWith(ConnectingView::class, ViewTransition.Fade(1.0.seconds))
@@ -76,9 +76,9 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "localhost"
                             try {
-                                AnimationSenderFactory.create(ipAddress = ipAddress).setAsDefaultSender()
+                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress).start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
-                                    if (!MessageSender.isDisconnected())
+                                    if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                                     else
                                         replaceWith(ConnectingView::class, ViewTransition.Fade(1.0.seconds))

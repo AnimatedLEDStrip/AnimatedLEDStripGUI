@@ -1,4 +1,5 @@
-import animatedledstrip.leds.Animations
+import animatedledstrip.client.AnimationData
+import animatedledstrip.leds.Animation
 import animatedledstrip.leds.Direction
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
@@ -20,7 +21,6 @@ class CustomColorView : View() {
     private var colorName: Label by singleAssign()
 
 
-
     init {
         colorButton = JFXButton("Color")
         stcButton = JFXButton("STC")
@@ -32,34 +32,38 @@ class CustomColorView : View() {
     private val sendButtonList = listOf(colorButton, stcButton, wipeButton, mtcButton, stkButton)
 
     /*  Helper functions for sending commands */
-    private fun sendC(color: String) =
-            MessageSender.send(mapOf("Animation" to Animations.COLOR, "Color1" to parseHex(color)))
+    private fun sendC(color: String) = AnimationData().animation(Animation.COLOR).color(color).send()
+//            MessageSender.send(mapOf("Animation" to Animations.COLOR, "Color1" to parseHex(color)))
 
     private fun sendWIP(color: String) {
-        val direction = when (selectedDirection) {
-            Direction.BACKWARD -> 'B'
-            Direction.FORWARD -> 'F'
-        }
-        MessageSender.send(mapOf("Animation" to Animations.WIPE, "Color1" to parseHex(color), "Direction" to direction))
+//        val direction = when (selectedDirection) {
+//            Direction.BACKWARD -> 'B'
+//            Direction.FORWARD -> 'F'
+//        }
+        AnimationData().animation(Animation.WIPE).color(color).direction(selectedDirection).send()
+//        MessageSender.send(mapOf("Animation" to Animations.WIPE, "Color1" to parseHex(color), "Direction" to direction))
     }
 
     private fun sendSTK(color: String) {
-        val direction = when (selectedDirection) {
-            Direction.BACKWARD -> 'B'
-            Direction.FORWARD -> 'F'
-        }
-        MessageSender.send(mapOf("Animation" to Animations.STACK, "Color1" to parseHex(color), "Direction" to direction))
+//        val direction = when (selectedDirection) {
+//            Direction.BACKWARD -> 'B'
+//            Direction.FORWARD -> 'F'
+//        }
+        AnimationData().animation(Animation.STACK).color(color).direction(selectedDirection).send()
+//        MessageSender.send(mapOf("Animation" to Animations.STACK, "Color1" to parseHex(color), "Direction" to direction))
     }
 
     private fun sendSTC(color: String) =
-            MessageSender.send(mapOf("Animation" to Animations.SPARKLETOCOLOR, "Color1" to parseHex(color)))
+            AnimationData().animation(Animation.SPARKLETOCOLOR).color(color).send()
+//            MessageSender.send(mapOf("Animation" to Animations.SPARKLETOCOLOR, "Color1" to parseHex(color)))
 
     private fun sendMTC(color: String) {
-        val direction = when (selectedDirection) {
-            Direction.BACKWARD -> 'B'
-            Direction.FORWARD -> 'F'
-        }
-        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUNTOCOLOR, "Color1" to parseHex(color), "Direction" to direction))
+//        val direction = when (selectedDirection) {
+//            Direction.BACKWARD -> 'B'
+//            Direction.FORWARD -> 'F'
+//        }
+        AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(color).direction(selectedDirection).send()
+//        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUNTOCOLOR, "Color1" to parseHex(color), "Direction" to direction))
     }
 
 

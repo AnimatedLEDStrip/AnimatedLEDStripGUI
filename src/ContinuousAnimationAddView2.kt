@@ -1,4 +1,5 @@
-import animatedledstrip.leds.Animations
+import animatedledstrip.client.AnimationData
+import animatedledstrip.leds.Animation
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
 import javafx.scene.layout.GridPane
@@ -42,7 +43,7 @@ class ContinuousAnimationAddView2 : View() {
 
     private var colorGridPaneList: List<JFXButton>
 
-    private var animationBuilder = mutableMapOf<String, Any>("Continuous" to true)
+    private var animation = AnimationData().continuous(true)
 
     init {
 
@@ -143,7 +144,7 @@ class ContinuousAnimationAddView2 : View() {
             this@ContinuousAnimationAddView2.centerVBox.children.remove(sendColorsButton)
             this@ContinuousAnimationAddView2.centerVBox.children.removeAll(buttonGroupDirection)
 
-            animationBuilder = mutableMapOf<String, Any>("Continuous" to true)
+            animation = AnimationData().continuous(true)
             multiColorList = mutableListOf()
 
             this@ContinuousAnimationAddView2.centerVBox.children.addAll(buttonGroupAnimations)
@@ -155,7 +156,7 @@ class ContinuousAnimationAddView2 : View() {
 
         altButton.apply {
             action {
-                animationBuilder["Animation"] = Animations.ALTERNATE
+                animation.animation = Animation.ALTERNATE
                 this@ContinuousAnimationAddView2.centerVBox.children.removeAll(buttonGroupAnimations)
                 this@ContinuousAnimationAddView2.centerVBox += colorGridPane
                 this@ContinuousAnimationAddView2.centerVBox += chooseColorButton
@@ -163,7 +164,7 @@ class ContinuousAnimationAddView2 : View() {
         }
         mprButton.apply {
             action {
-                animationBuilder["Animation"] = Animations.MULTIPIXELRUN
+                animation.animation = Animation.MULTIPIXELRUN
                 this@ContinuousAnimationAddView2.centerVBox.children.removeAll(buttonGroupAnimations)
                 this@ContinuousAnimationAddView2.centerVBox += colorGridPane
                 this@ContinuousAnimationAddView2.centerVBox += chooseColorButton
@@ -171,7 +172,7 @@ class ContinuousAnimationAddView2 : View() {
         }
         pxmButton.apply {
             action {
-                animationBuilder["Animation"] = Animations.PIXELMARATHON
+                animation.animation = Animation.PIXELMARATHON
                 this@ContinuousAnimationAddView2.centerVBox.children.removeAll(buttonGroupAnimations)
                 this@ContinuousAnimationAddView2.centerVBox += colorGridPane
                 this@ContinuousAnimationAddView2.centerVBox += chooseColorButton
@@ -179,7 +180,7 @@ class ContinuousAnimationAddView2 : View() {
         }
         pxrButton.apply {
             action {
-                animationBuilder["Animation"] = Animations.PIXELRUN
+                animation.animation = Animation.PIXELRUN
                 this@ContinuousAnimationAddView2.centerVBox.children.removeAll(buttonGroupAnimations)
                 this@ContinuousAnimationAddView2.centerVBox += colorGridPane
                 this@ContinuousAnimationAddView2.centerVBox += chooseColorButton
@@ -187,7 +188,7 @@ class ContinuousAnimationAddView2 : View() {
         }
         pxrtButton.apply {
             action {
-                animationBuilder["Animation"] = Animations.PIXELRUNWITHTRAIL
+                animation.animation = Animation.PIXELRUNWITHTRAIL
                 this@ContinuousAnimationAddView2.centerVBox.children.removeAll(buttonGroupAnimations)
                 this@ContinuousAnimationAddView2.centerVBox += colorGridPane
                 this@ContinuousAnimationAddView2.centerVBox += chooseColorButton
@@ -195,7 +196,7 @@ class ContinuousAnimationAddView2 : View() {
         }
         schButton.apply {
             action {
-                animationBuilder["Animation"] = Animations.SMOOTHCHASE
+                animation.animation = Animation.SMOOTHCHASE
                 this@ContinuousAnimationAddView2.centerVBox.children.removeAll(buttonGroupAnimations)
                 this@ContinuousAnimationAddView2.centerVBox += colorGridPane
                 this@ContinuousAnimationAddView2.centerVBox += colorGridPaneButtons
@@ -203,7 +204,7 @@ class ContinuousAnimationAddView2 : View() {
         }
         spkButton.apply {
             action {
-                animationBuilder["Animation"] = Animations.SPARKLE
+                animation.animation = Animation.SPARKLE
                 this@ContinuousAnimationAddView2.centerVBox.children.removeAll(buttonGroupAnimations)
                 this@ContinuousAnimationAddView2.centerVBox += colorGridPane
                 this@ContinuousAnimationAddView2.centerVBox += chooseColorButton
@@ -211,7 +212,7 @@ class ContinuousAnimationAddView2 : View() {
         }
         stoButton.apply {
             action {
-                animationBuilder["Animation"] = Animations.STACKOVERFLOW
+                animation.animation = Animation.STACKOVERFLOW
                 this@ContinuousAnimationAddView2.centerVBox.children.removeAll(buttonGroupAnimations)
                 this@ContinuousAnimationAddView2.centerVBox += colorGridPane
                 this@ContinuousAnimationAddView2.centerVBox += chooseColorButton
@@ -221,31 +222,33 @@ class ContinuousAnimationAddView2 : View() {
 
         chooseColorButton.apply {
             action {
-                when (animationBuilder["Animation"]) {
-                    Animations.SPARKLE -> {
-                        animationBuilder["Color1"] = selectedColor.getHex().toLong(16)
+                when (animation.animation) {
+                    Animation.SPARKLE -> {
+                        animation.color(selectedColor.getHex())
                         this@ContinuousAnimationAddView2.centerVBox.children.remove(colorGridPane)
                         this@ContinuousAnimationAddView2.centerVBox.children.remove(chooseColorButton)
                         this@ContinuousAnimationAddView2.centerVBox.children.remove(sendColorsButton)
-                        MessageSender.send(animationBuilder)
+                        animation.send()
+//                        MessageSender.send(animation)
                         reset()
                     }
-                    Animations.ALTERNATE,
-                    Animations.MULTIPIXELRUN,
-                    Animations.PIXELRUN,
-                    Animations.PIXELRUNWITHTRAIL,
-                    Animations.STACKOVERFLOW -> {
+                    Animation.ALTERNATE,
+                    Animation.MULTIPIXELRUN,
+                    Animation.PIXELRUN,
+                    Animation.PIXELRUNWITHTRAIL,
+                    Animation.STACKOVERFLOW -> {
                         when (colorChoiceNumber) {
                             1 -> {
-                                animationBuilder["Color1"] = selectedColor.getHex().toLong(16)
+                                animation.color1(selectedColor.getHex())
                                 colorChoiceNumber++
                             }
                             2 -> {
-                                animationBuilder["Color2"] = selectedColor.getHex().toLong(16)
+                                animation.color2(selectedColor.getHex())
                                 colorChoiceNumber = 1
-                                when (animationBuilder["Animation"]) {
-                                    Animations.ALTERNATE, Animations.STACKOVERFLOW -> {
-                                        MessageSender.send(animationBuilder)
+                                when (animation.animation) {
+                                    Animation.ALTERNATE, Animation.STACKOVERFLOW -> {
+                                        animation.send()
+//                                        MessageSender.send(animation)
                                         reset()
                                     }
                                     else -> {
@@ -259,37 +262,37 @@ class ContinuousAnimationAddView2 : View() {
                             else -> println("colorChoiceNumber out of 1..2")
                         }
                     }
-                    Animations.PIXELMARATHON -> {
+                    Animation.PIXELMARATHON -> {
                         when (colorChoiceNumber) {
                             1 -> {
-                                animationBuilder["Color1"] = selectedColor.getHex().toLong(16)
+                                animation.color1(selectedColor.getHex())
                                 colorChoiceNumber++
                             }
                             2 -> {
-                                animationBuilder["Color2"] = selectedColor.getHex().toLong(16)
+                                animation.color2(selectedColor.getHex())
                                 colorChoiceNumber++
                             }
                             3 -> {
-                                animationBuilder["Color3"] = selectedColor.getHex().toLong(16)
+                                animation.color3(selectedColor.getHex())
                                 colorChoiceNumber++
                             }
                             4 -> {
-                                animationBuilder["Color4"] = selectedColor.getHex().toLong(16)
+                                animation.color4(selectedColor.getHex())
                                 colorChoiceNumber++
                             }
                             5 -> {
-                                animationBuilder["Color5"] = selectedColor.getHex().toLong(16)
+                                animation.color5(selectedColor.getHex())
                                 colorChoiceNumber = 1
                                 this@ContinuousAnimationAddView2.centerVBox.children.remove(colorGridPane)
                                 this@ContinuousAnimationAddView2.centerVBox.children.remove(chooseColorButton)
                                 this@ContinuousAnimationAddView2.centerVBox.children.remove(sendColorsButton)
-                                MessageSender.send(animationBuilder)
+                                animation.send()
                                 reset()
                             }
                             else -> println("colorChoiceNumber out of 1..5")
                         }
                     }
-                    Animations.SMOOTHCHASE -> {
+                    Animation.SMOOTHCHASE -> {
                         multiColorList.add(selectedColor.getHex().toLong(16))
                     }
                     else -> {
@@ -308,24 +311,21 @@ class ContinuousAnimationAddView2 : View() {
         buttonGroupDirection.forEach {
             it.apply {
                 action {
-                    animationBuilder["Direction"] = when (it.text) {
+                    animation.direction(when (it.text) {
                         "Forward" -> 'F'
                         "Backward" -> 'B'
                         else -> 'F'
-                    }
-
-                    MessageSender.send(animationBuilder)
-
+                    })
+                    animation.send()
                     reset()
-
                 }
             }
         }
 
         sendColorsButton.apply {
             action {
-                animationBuilder["Color1"] = multiColorList[0]
-                animationBuilder["ColorList"] = multiColorList
+                animation.color(multiColorList[0])
+                animation.colorList(multiColorList)
                 this@ContinuousAnimationAddView2.centerVBox.children.remove(colorGridPane)
                 this@ContinuousAnimationAddView2.centerVBox.children.remove(colorGridPaneButtons)
                 this@ContinuousAnimationAddView2.centerVBox.children.addAll(buttonGroupDirection)
@@ -336,8 +336,8 @@ class ContinuousAnimationAddView2 : View() {
 
         defaultColorSelectButton.apply {
             action {
-                animationBuilder["Color1"] = defaultColorList[0]
-                animationBuilder["ColorList"] = defaultColorList
+                animation.color(defaultColorList[0])
+                animation.colorList(defaultColorList)
                 this@ContinuousAnimationAddView2.centerVBox.children.remove(colorGridPane)
                 this@ContinuousAnimationAddView2.centerVBox.children.remove(colorGridPaneButtons)
                 this@ContinuousAnimationAddView2.centerVBox.children.addAll(buttonGroupDirection)

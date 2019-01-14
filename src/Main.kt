@@ -1,3 +1,4 @@
+import animatedledstrip.client.AnimationSenderFactory
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
 import org.apache.commons.exec.CommandLine
@@ -10,9 +11,10 @@ var animations: VBox by singleAssign()
 
 var ipAddress = "10.44.157.2"
 
-
+var mainSender: AnimationSenderFactory.AnimationSender? = null
 
 fun main(args: Array<String>) {
+    animations = VBox()
     try {
         if (args[0].toUpperCase() == "WINDOWED") isFullscreen = false
     } catch (e: Exception) {
@@ -36,7 +38,7 @@ fun shutdownGUI() {
         executor.setExitValue(0)
         executor.execute(commandLine)
         try {
-            MessageSender.send(mapOf("Quit" to true))
+//            MessageSender.send(mapOf("Quit" to true))
         } catch (e: Exception) {
         }
     } catch (e: Exception) {
