@@ -13,6 +13,7 @@ class CustomColorView : View() {
     private var stcButton: JFXButton by singleAssign()
     private var wipeButton: JFXButton by singleAssign()
     private var mtcButton: JFXButton by singleAssign()
+    private var stkButton: JFXButton by singleAssign()
     private var toggleReverse: JFXButton by singleAssign()
     private var selectedColor = Color.ALICEBLUE
     private var selectedDirection = Direction.FORWARD
@@ -25,9 +26,10 @@ class CustomColorView : View() {
         stcButton = JFXButton("STC")
         wipeButton = JFXButton("Wipe")
         mtcButton = JFXButton("MTC")
+        stkButton = JFXButton("STK")
     }
 
-    private val sendButtonList = listOf(colorButton, stcButton, wipeButton, mtcButton)
+    private val sendButtonList = listOf(colorButton, stcButton, wipeButton, mtcButton, stkButton)
 
     /*  Helper functions for sending commands */
     private fun sendC(color: String) =
@@ -39,6 +41,14 @@ class CustomColorView : View() {
             Direction.FORWARD -> 'F'
         }
         MessageSender.send(mapOf("Animation" to Animations.WIPE, "Color1" to parseHex(color), "Direction" to direction))
+    }
+
+    private fun sendSTK(color: String) {
+        val direction = when (selectedDirection) {
+            Direction.BACKWARD -> 'B'
+            Direction.FORWARD -> 'F'
+        }
+        MessageSender.send(mapOf("Animation" to Animations.STACK, "Color1" to parseHex(color), "Direction" to direction))
     }
 
     private fun sendSTC(color: String) =
@@ -212,6 +222,7 @@ class CustomColorView : View() {
                                 stcButton -> sendSTC(selectedColor.getHex())
                                 wipeButton -> sendWIP(selectedColor.getHex())
                                 mtcButton -> sendMTC(selectedColor.getHex())
+                                stkButton -> sendSTK(selectedColor.getHex())
                             }
                         }
                     }

@@ -10,6 +10,8 @@ var animations: VBox by singleAssign()
 
 var ipAddress = "10.44.157.2"
 
+
+
 fun main(args: Array<String>) {
     try {
         if (args[0].toUpperCase() == "WINDOWED") isFullscreen = false

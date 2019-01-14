@@ -24,7 +24,9 @@ class ContinuousAnimationAddView2 : View() {
     private var stoButton: JFXButton by singleAssign()
 
     private var chooseColorButton: JFXButton by singleAssign()
+    private var smoothChaseChooseColorButton: JFXButton by singleAssign()
     private var sendColorsButton: JFXButton by singleAssign()
+    private var defaultColorSelectButton: JFXButton by singleAssign()
 
     private var forwardButton: JFXButton by singleAssign()
     private var backwardButton: JFXButton by singleAssign()
@@ -78,10 +80,18 @@ class ContinuousAnimationAddView2 : View() {
             setMinSize(50.0, 50.0)
         }
 
+
         chooseColorButton = JFXButton("Add Color").apply {
             setMinSize(50.0, 50.0)
         }
+        smoothChaseChooseColorButton = JFXButton("Add Color").apply {
+            setMinSize(50.0, 50.0)
+        }
         sendColorsButton = JFXButton("Send Colors").apply {
+            setMinSize(50.0, 50.0)
+        }
+
+        defaultColorSelectButton = JFXButton("Send Default Colors").apply {
             setMinSize(50.0, 50.0)
         }
 
@@ -115,6 +125,7 @@ class ContinuousAnimationAddView2 : View() {
         }
 
         colorGridPaneButtons = hbox {
+            this += defaultColorSelectButton
             this += chooseColorButton
             this += sendColorsButton
             alignment = Pos.CENTER
@@ -140,7 +151,7 @@ class ContinuousAnimationAddView2 : View() {
 
         multiColorList = mutableListOf()
 
-        colorGridPaneList = listOf(chooseColorButton, sendColorsButton)
+        colorGridPaneList = listOf(defaultColorSelectButton, smoothChaseChooseColorButton, sendColorsButton)
 
         altButton.apply {
             action {
@@ -272,7 +283,8 @@ class ContinuousAnimationAddView2 : View() {
                                 this@ContinuousAnimationAddView2.centerVBox.children.remove(colorGridPane)
                                 this@ContinuousAnimationAddView2.centerVBox.children.remove(chooseColorButton)
                                 this@ContinuousAnimationAddView2.centerVBox.children.remove(sendColorsButton)
-                                this@ContinuousAnimationAddView2.centerVBox.children.addAll(buttonGroupDirection)
+                                MessageSender.send(animationBuilder)
+                                reset()
                             }
                             else -> println("colorChoiceNumber out of 1..5")
                         }
@@ -284,6 +296,12 @@ class ContinuousAnimationAddView2 : View() {
                         println("Animation not supported")
                     }
                 }
+            }
+        }
+
+        smoothChaseChooseColorButton.apply {
+            action {
+                multiColorList.add(selectedColor.getHex().toLong(16))
             }
         }
 
@@ -308,6 +326,18 @@ class ContinuousAnimationAddView2 : View() {
             action {
                 animationBuilder["Color1"] = multiColorList[0]
                 animationBuilder["ColorList"] = multiColorList
+                this@ContinuousAnimationAddView2.centerVBox.children.remove(colorGridPane)
+                this@ContinuousAnimationAddView2.centerVBox.children.remove(colorGridPaneButtons)
+                this@ContinuousAnimationAddView2.centerVBox.children.addAll(buttonGroupDirection)
+            }
+        }
+
+        val defaultColorList = listOf<Long>(0xFF0000, 0xD52A00, 0xAB5500, 0xAB7F00, 0xABAB00, 0x56D500, 0x00FF00, 0x00D52A, 0x00AB55, 0x0056AA, 0x0000FF, 0x2A00D5, 0x5500AB, 0x7F0081, 0xAB0055, 0xD5002B)
+
+        defaultColorSelectButton.apply {
+            action {
+                animationBuilder["Color1"] = defaultColorList[0]
+                animationBuilder["ColorList"] = defaultColorList
                 this@ContinuousAnimationAddView2.centerVBox.children.remove(colorGridPane)
                 this@ContinuousAnimationAddView2.centerVBox.children.remove(colorGridPaneButtons)
                 this@ContinuousAnimationAddView2.centerVBox.children.addAll(buttonGroupDirection)

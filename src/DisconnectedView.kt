@@ -1,3 +1,4 @@
+import animatedledstrip.client.AnimationSenderFactory
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
 import javafx.scene.paint.Color
@@ -35,7 +36,7 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "10.44.157.2"
                             try {
-                                MessageSender
+                                AnimationSenderFactory.create(ipAddress = ipAddress).setAsDefaultSender()
                                 runLater(1.0.seconds) {
                                     if (!MessageSender.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
@@ -55,7 +56,7 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "10.44.103.233"
                             try {
-                                MessageSender
+                                AnimationSenderFactory.create(ipAddress = ipAddress).setAsDefaultSender()
                                 runLater(1.0.seconds) {
                                     if (!MessageSender.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
@@ -75,7 +76,7 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "localhost"
                             try {
-                                MessageSender
+                                AnimationSenderFactory.create(ipAddress = ipAddress).setAsDefaultSender()
                                 runLater(1.0.seconds) {
                                     if (!MessageSender.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))

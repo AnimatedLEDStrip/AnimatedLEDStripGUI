@@ -51,7 +51,7 @@ class InputDynamic : View() {
             Direction.BACKWARD -> 'B'
             Direction.FORWARD -> 'F'
         }
-        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUN, "Color1" to parseHex(color), "Direction" to direction, "Continuous" to true))
+        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUNTOCOLOR, "Color1" to parseHex(color), "Direction" to direction, "Continuous" to true))
         changeColor()
     }
 

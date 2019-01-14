@@ -27,7 +27,7 @@ object MessageSender {
         }
     }
 
-    suspend fun startSocket() {
+    private suspend fun startSocket() {
         while (true) {
             connectSocket()
             try {
@@ -65,7 +65,7 @@ object MessageSender {
         }
     }
 
-    suspend fun connectSocket() {
+    private suspend fun connectSocket() {
         try {
             socket.connect(InetSocketAddress(ipAddress, 5), 5000)
             println("Connected to server at $ipAddress")
