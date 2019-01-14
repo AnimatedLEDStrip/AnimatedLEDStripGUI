@@ -1,339 +1,370 @@
-//import animatedledstrip.client.AnimationData
-//import animatedledstrip.leds.Animations
-//import com.jfoenix.controls.JFXButton
-//import com.jfoenix.controls.JFXColorPicker
-//import javafx.geometry.Pos
-//import javafx.scene.control.Label
-//import javafx.scene.layout.VBox
-//import javafx.scene.paint.Color
-//import javafx.scene.text.Font
-//import tornadofx.*
-//
-//class ContinuousAnimationAddView : View() {
-//
-//    private var centerVBox: VBox by singleAssign()
-//
-//    private var altButton: JFXButton by singleAssign()
-//    private var mprButton: JFXButton by singleAssign()
-//    private var pxmButton: JFXButton by singleAssign()
-//    private var pxrButton: JFXButton by singleAssign()
-//    private var pxrtButton: JFXButton by singleAssign()
-//    private var schButton: JFXButton by singleAssign()
-//    private var spkButton: JFXButton by singleAssign()
-//    private var stoButton: JFXButton by singleAssign()
-//
-//    private var colorPicker1: JFXColorPicker by singleAssign()
-//    private var colorPicker2: JFXColorPicker by singleAssign()
-//    private var colorPicker3: JFXColorPicker by singleAssign()
-//    private var colorPicker4: JFXColorPicker by singleAssign()
-//    private var colorPicker5: JFXColorPicker by singleAssign()
-//    private var colorPickerButton: JFXButton by singleAssign()
-//
-//    private var forwardButton: JFXButton by singleAssign()
-//    private var backwardButton: JFXButton by singleAssign()
-//
-//    private var colorSpacer1: Label by singleAssign()
-//    private var colorSpacer2: Label by singleAssign()
-//    private var colorSpacer3: Label by singleAssign()
-//    private var colorSpacer4: Label by singleAssign()
-//
-//    private var multiColorPicker: JFXColorPicker by singleAssign()
-//    private var multiColorPickerButton: JFXButton by singleAssign()
-//    private var multiColorPickerCompleteButton: JFXButton by singleAssign()
-//
-//    private val buttonGroupAnimations: List<JFXButton>
-//    private val buttonGroupColors1: List<Any>
-//    private val buttonGroupColors2: List<Any>
-//    private val buttonGroupColors3: List<Any>
-//    private val buttonGroupColors4: List<Any>
-//    private val buttonGroupColors5: List<Any>
-//    private val buttonGroupDirection: List<JFXButton>
-//    private val buttonGroupMultiColor: List<Any>
-//
-//    private var multiColorList: MutableList<Long>
-//
-//
-//    private var animationBuilder = AnimationData().continuous(true)
-//
-//    init {
-//        centerVBox = VBox()
-//
-//        altButton = JFXButton("Alternate").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//        mprButton = JFXButton("Multi-Pixel Run").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//        pxmButton = JFXButton("Pixel Marathon").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//        pxrButton = JFXButton("Pixel Run").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//        pxrtButton = JFXButton("Pixel Run with Trail").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//        schButton = JFXButton("Smooth Chase").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//        spkButton = JFXButton("Sparkle").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//        stoButton = JFXButton("Stack Overflow").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//
-//        colorPicker1 = JFXColorPicker().apply {
-//            value = Color.BLACK
-//            setMinSize(50.0, 50.0)
-//        }
-//        colorPicker2 = JFXColorPicker().apply {
-//            value = Color.BLACK
-//            setMinSize(50.0, 50.0)
-//        }
-//        colorPicker3 = JFXColorPicker().apply {
-//            value = Color.BLACK
-//            setMinSize(50.0, 50.0)
-//        }
-//        colorPicker4 = JFXColorPicker().apply {
-//            value = Color.BLACK
-//            setMinSize(50.0, 50.0)
-//        }
-//        colorPicker5 = JFXColorPicker().apply {
-//            value = Color.BLACK
-//            setMinSize(50.0, 50.0)
-//        }
-//        colorPickerButton = JFXButton("Set Colors").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//
-//        forwardButton = JFXButton("Forward").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//        backwardButton = JFXButton("Backward").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//
-//        multiColorPicker = JFXColorPicker().apply {
-//            value = Color.BLACK
-//            setMinSize(50.0, 50.0)
-//        }
-//        multiColorPickerButton = JFXButton("Add Color").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//        multiColorPickerCompleteButton = JFXButton("Send Colors").apply {
-//            setMinSize(50.0, 50.0)
-//        }
-//
-//
-//        colorSpacer1 = Label().apply {
-//            style {
-//                font = Font(5.0)
-//            }
-//        }
-//        colorSpacer2 = Label().apply {
-//            style {
-//                font = Font(5.0)
-//            }
-//        }
-//        colorSpacer3 = Label().apply {
-//            style {
-//                font = Font(5.0)
-//            }
-//        }
-//        colorSpacer4 = Label().apply {
-//            style {
-//                font = Font(5.0)
-//            }
-//        }
-//
-//        buttonGroupAnimations = listOf(altButton, mprButton, pxmButton, pxrButton, pxrtButton, schButton, spkButton, stoButton)
-//
-//        buttonGroupColors1 = listOf(colorPicker1, colorPickerButton)
-//        buttonGroupColors2 = listOf(colorPicker1, colorSpacer1, colorPicker2, colorPickerButton)
-//        buttonGroupColors3 = listOf(colorPicker1, colorSpacer1, colorPicker2, colorSpacer2, colorPicker3, colorPickerButton)
-//        buttonGroupColors4 = listOf(colorPicker1, colorSpacer1, colorPicker2, colorSpacer2, colorPicker3, colorSpacer3, colorPicker4, colorPickerButton)
-//        buttonGroupColors5 = listOf(colorPicker1, colorSpacer1, colorPicker2, colorSpacer2, colorPicker3, colorSpacer3, colorPicker4, colorSpacer4, colorPicker5, colorPickerButton)
-//
-//        buttonGroupDirection = listOf(forwardButton, backwardButton)
-//
-//        buttonGroupMultiColor = listOf(multiColorPicker, colorSpacer1, multiColorPickerButton, colorSpacer2, multiColorPickerCompleteButton)
-//
-//        multiColorList = mutableListOf()
-//
-//        altButton.apply {
-//            action {
-//                animationBuilder.animation = Animations.ALTERNATE
-//                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-//                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors2)
-//            }
-//        }
-//        mprButton.apply {
-//            action {
-//                animationBuilder.animation = Animations.MULTIPIXELRUN
-//                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-//                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors2)
-//            }
-//        }
-//        pxmButton.apply {
-//            action {
-//                animationBuilder.animation = Animations.PIXELMARATHON
-//                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-//                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors5)
-//            }
-//        }
-//        pxrButton.apply {
-//            action {
-//                animationBuilder.animation = Animations.PIXELRUN
-//                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-//                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors2)
-//            }
-//        }
-//        pxrtButton.apply {
-//            action {
-//                animationBuilder.animation = Animations.PIXELRUNWITHTRAIL
-//                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-//                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors2)
-//            }
-//        }
-//        schButton.apply {
-//            action {
-//                animationBuilder.animation = Animations.SMOOTHCHASE
-//                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-//                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupMultiColor)
-//            }
-//        }
-//        spkButton.apply {
-//            action {
-//                animationBuilder.animation = Animations.SPARKLE
-//                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-//                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors1)
-//            }
-//        }
-//        stoButton.apply {
-//            action {
-//                animationBuilder.animation = Animations.STACKOVERFLOW
-//                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-//                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupColors2)
-//            }
-//        }
-//
-//
-//        colorPickerButton.apply {
-//            action {
-//                when (animationBuilder.animation) {
-//                    Animations.SPARKLE -> {
-//                        animationBuilder.color1()
-//                        animationBuilder["Color1"] = colorPicker1.value.getHex().toLong(16)
-//                    }
-//                    Animations.ALTERNATE,
-//                    Animations.MULTIPIXELRUN,
-//                    Animations.PIXELRUN,
-//                    Animations.PIXELRUNWITHTRAIL,
-//                    Animations.STACKOVERFLOW -> {
-//                        animationBuilder["Color1"] = colorPicker1.value.getHex().toLong(16)
-//                        animationBuilder["Color2"] = colorPicker2.value.getHex().toLong(16)
-//                    }
-//                    Animations.PIXELMARATHON -> {
-//                        animationBuilder["Color1"] = colorPicker1.value.getHex().toLong(16)
-//                        animationBuilder["Color2"] = colorPicker2.value.getHex().toLong(16)
-//                        animationBuilder["Color3"] = colorPicker3.value.getHex().toLong(16)
-//                        animationBuilder["Color4"] = colorPicker4.value.getHex().toLong(16)
-//                        animationBuilder["Color5"] = colorPicker5.value.getHex().toLong(16)
-//                    }
-//                    Animations.SMOOTHCHASE -> TODO()
-//                }
-//
-//                when (animationBuilder["Animation"] as Animations) {
-//                    Animations.ALTERNATE,
-//                    Animations.SPARKLE,
-//                    Animations.STACKOVERFLOW,
-//                    Animations.PIXELMARATHON -> {
-//                        this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupColors5)
-//                        MessageSender.send(animationBuilder)
-//
-//                        animationBuilder = mutableMapOf<String, Any>("Continuous" to true)
-//
-//                        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
-//                    }
-//                    Animations.MULTIPIXELRUN,
-//                    Animations.PIXELRUN,
-//                    Animations.PIXELRUNWITHTRAIL -> {
-//                        this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupColors5)
-//                        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
-//                    }
-//                }
-//
-//            }
-//        }
-//
-//
-//        buttonGroupDirection.forEach {
-//            it.apply {
-//                action {
-//                    animationBuilder["Direction"] = when (it.text) {
-//                        "Forward" -> 'F'
-//                        "Backward" -> 'B'
-//                        else -> 'F'
-//                    }
-//                    this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupDirection)
-//                    MessageSender.send(animationBuilder)
-//
-//                    animationBuilder = mutableMapOf<String, Any>("Continuous" to true)
-//                    multiColorList = mutableListOf()
-//
-//                    this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
-//                }
-//            }
-//        }
-//
-//        multiColorPickerButton.apply {
-//            action {
-//                multiColorList.add(multiColorPicker.value.getHex().toLong(16))
-//            }
-//        }
-//
-//        multiColorPickerCompleteButton.apply {
-//            action {
-//                when (animationBuilder["Animation"] as Animations) {
-//                    Animations.SPARKLE,
-//                    Animations.ALTERNATE,
-//                    Animations.MULTIPIXELRUN,
-//                    Animations.PIXELRUN,
-//                    Animations.PIXELRUNWITHTRAIL,
-//                    Animations.STACKOVERFLOW,
-//                    Animations.PIXELMARATHON -> TODO()
-//                    Animations.SMOOTHCHASE -> {
-//                        animationBuilder["Color1"] = multiColorList[0]
-//                        animationBuilder["ColorList"] = multiColorList
-//                        this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupMultiColor)
-//                        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
-//                    }
-//                }
-//            }
-//        }
-//
-//        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
-//
-//    }
-//
-//
-//    override val root = borderpane {
-//
-//        style {
-//            backgroundColor += Color.LIGHTSEAGREEN
-//        }
-//
-//        addExitAndBlankButtons(this)
-//        addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
-//
-//        center {
-//            this += centerVBox.apply {
-//                style {
-//                    alignment = Pos.CENTER
-//                }
-//            }
-//        }
-//    }
-//
-//}
+import animatedledstrip.client.AnimationData
+import animatedledstrip.leds.Animation
+import com.jfoenix.controls.JFXButton
+import javafx.geometry.Pos
+import javafx.scene.layout.GridPane
+import javafx.scene.layout.HBox
+import javafx.scene.layout.VBox
+import javafx.scene.paint.Color
+import tornadofx.*
+
+class ContinuousAnimationAddView : View() {
+
+    private var colorChoiceNumber = 1
+    private var selectedColor = Color.ALICEBLUE
+
+    private var centerVBox: VBox by singleAssign()
+
+    private var altButton: JFXButton by singleAssign()
+    private var mprButton: JFXButton by singleAssign()
+    private var pxmButton: JFXButton by singleAssign()
+    private var pxrButton: JFXButton by singleAssign()
+    private var pxrtButton: JFXButton by singleAssign()
+    private var schButton: JFXButton by singleAssign()
+    private var spkButton: JFXButton by singleAssign()
+    private var stoButton: JFXButton by singleAssign()
+
+    private var chooseColorButton: JFXButton by singleAssign()
+    private var smoothChaseChooseColorButton: JFXButton by singleAssign()
+    private var sendColorsButton: JFXButton by singleAssign()
+    private var defaultColorSelectButton: JFXButton by singleAssign()
+
+    private var forwardButton: JFXButton by singleAssign()
+    private var backwardButton: JFXButton by singleAssign()
+
+
+    private val buttonGroupAnimations: List<JFXButton>
+    private val buttonGroupDirection: List<JFXButton>
+
+    private var multiColorList: MutableList<Long>
+
+    private var colorGridPane: GridPane by singleAssign()
+    private var colorGridPaneButtons: HBox by singleAssign()
+
+    private var colorGridPaneList: List<JFXButton>
+
+    private var animation = AnimationData().continuous(true)
+
+    init {
+
+        centerVBox = VBox()
+
+        altButton = JFXButton("Alternate").apply {
+            setMinSize(50.0, 50.0)
+        }
+        mprButton = JFXButton("Multi-Pixel Run").apply {
+            setMinSize(50.0, 50.0)
+        }
+        pxmButton = JFXButton("Pixel Marathon").apply {
+            setMinSize(50.0, 50.0)
+        }
+        pxrButton = JFXButton("Pixel Run").apply {
+            setMinSize(50.0, 50.0)
+        }
+        pxrtButton = JFXButton("Pixel Run with Trail").apply {
+            setMinSize(50.0, 50.0)
+        }
+        schButton = JFXButton("Smooth Chase").apply {
+            setMinSize(50.0, 50.0)
+        }
+        spkButton = JFXButton("Sparkle").apply {
+            setMinSize(50.0, 50.0)
+        }
+        stoButton = JFXButton("Stack Overflow").apply {
+            setMinSize(50.0, 50.0)
+        }
+
+        forwardButton = JFXButton("Forward").apply {
+            setMinSize(50.0, 50.0)
+        }
+        backwardButton = JFXButton("Backward").apply {
+            setMinSize(50.0, 50.0)
+        }
+
+
+        chooseColorButton = JFXButton("Add Color").apply {
+            setMinSize(50.0, 50.0)
+        }
+        smoothChaseChooseColorButton = JFXButton("Add Color").apply {
+            setMinSize(50.0, 50.0)
+        }
+        sendColorsButton = JFXButton("Send Colors").apply {
+            setMinSize(50.0, 50.0)
+        }
+
+        defaultColorSelectButton = JFXButton("Send Default Colors").apply {
+            setMinSize(50.0, 50.0)
+        }
+
+        colorGridPane = gridpane {
+            alignment = Pos.CENTER
+            colorRows.forEach { list ->
+                row {
+                    alignment = Pos.CENTER
+                    list.forEach { color ->
+                        this += JFXButton().apply {
+                            setMinSize(35.0, 35.0)
+                            alignment = Pos.CENTER
+
+                            style {
+                                backgroundColor += color
+                            }
+                            action {
+                                selectedColor = color
+                                chooseColorButton.apply {
+                                    style {
+                                        backgroundColor += color
+                                        if (darkColors.contains(color)) textFill = Color.WHITE
+                                        alignment = Pos.CENTER
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        colorGridPaneButtons = hbox {
+            this += defaultColorSelectButton
+            this += chooseColorButton
+            this += sendColorsButton
+            alignment = Pos.CENTER
+        }
+
+        buttonGroupAnimations = listOf(altButton, mprButton, pxmButton, pxrButton, pxrtButton, schButton, spkButton, stoButton)
+
+        buttonGroupDirection = listOf(forwardButton, backwardButton)
+
+        fun reset() {
+            this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+            this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
+            this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPaneButtons)
+            this@ContinuousAnimationAddView.centerVBox.children.remove(chooseColorButton)
+            this@ContinuousAnimationAddView.centerVBox.children.remove(sendColorsButton)
+            this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupDirection)
+
+            animation = AnimationData().continuous(true)
+            multiColorList = mutableListOf()
+
+            this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
+        }
+
+        multiColorList = mutableListOf()
+
+        colorGridPaneList = listOf(defaultColorSelectButton, smoothChaseChooseColorButton, sendColorsButton)
+
+        altButton.apply {
+            action {
+                animation.animation = Animation.ALTERNATE
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+            }
+        }
+        mprButton.apply {
+            action {
+                animation.animation = Animation.MULTIPIXELRUN
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+            }
+        }
+        pxmButton.apply {
+            action {
+                animation.animation = Animation.PIXELMARATHON
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+            }
+        }
+        pxrButton.apply {
+            action {
+                animation.animation = Animation.PIXELRUN
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+            }
+        }
+        pxrtButton.apply {
+            action {
+                animation.animation = Animation.PIXELRUNWITHTRAIL
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+            }
+        }
+        schButton.apply {
+            action {
+                animation.animation = Animation.SMOOTHCHASE
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += colorGridPaneButtons
+            }
+        }
+        spkButton.apply {
+            action {
+                animation.animation = Animation.SPARKLE
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+            }
+        }
+        stoButton.apply {
+            action {
+                animation.animation = Animation.STACKOVERFLOW
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+            }
+        }
+
+
+        chooseColorButton.apply {
+            action {
+                when (animation.animation) {
+                    Animation.SPARKLE -> {
+                        animation.color(selectedColor.getHex())
+                        this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
+                        this@ContinuousAnimationAddView.centerVBox.children.remove(chooseColorButton)
+                        this@ContinuousAnimationAddView.centerVBox.children.remove(sendColorsButton)
+                        animation.send()
+//                        MessageSender.send(animation)
+                        reset()
+                    }
+                    Animation.ALTERNATE,
+                    Animation.MULTIPIXELRUN,
+                    Animation.PIXELRUN,
+                    Animation.PIXELRUNWITHTRAIL,
+                    Animation.STACKOVERFLOW -> {
+                        when (colorChoiceNumber) {
+                            1 -> {
+                                animation.color1(selectedColor.getHex())
+                                colorChoiceNumber++
+                            }
+                            2 -> {
+                                animation.color2(selectedColor.getHex())
+                                colorChoiceNumber = 1
+                                when (animation.animation) {
+                                    Animation.ALTERNATE, Animation.STACKOVERFLOW -> {
+                                        animation.send()
+//                                        MessageSender.send(animation)
+                                        reset()
+                                    }
+                                    else -> {
+                                        this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
+                                        this@ContinuousAnimationAddView.centerVBox.children.remove(chooseColorButton)
+                                        this@ContinuousAnimationAddView.centerVBox.children.remove(sendColorsButton)
+                                        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
+                                    }
+                                }
+                            }
+                            else -> println("colorChoiceNumber out of 1..2")
+                        }
+                    }
+                    Animation.PIXELMARATHON -> {
+                        when (colorChoiceNumber) {
+                            1 -> {
+                                animation.color1(selectedColor.getHex())
+                                colorChoiceNumber++
+                            }
+                            2 -> {
+                                animation.color2(selectedColor.getHex())
+                                colorChoiceNumber++
+                            }
+                            3 -> {
+                                animation.color3(selectedColor.getHex())
+                                colorChoiceNumber++
+                            }
+                            4 -> {
+                                animation.color4(selectedColor.getHex())
+                                colorChoiceNumber++
+                            }
+                            5 -> {
+                                animation.color5(selectedColor.getHex())
+                                colorChoiceNumber = 1
+                                this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
+                                this@ContinuousAnimationAddView.centerVBox.children.remove(chooseColorButton)
+                                this@ContinuousAnimationAddView.centerVBox.children.remove(sendColorsButton)
+                                animation.send()
+                                reset()
+                            }
+                            else -> println("colorChoiceNumber out of 1..5")
+                        }
+                    }
+                    Animation.SMOOTHCHASE -> {
+                        multiColorList.add(selectedColor.getHex().toLong(16))
+                    }
+                    else -> {
+                        println("Animation not supported")
+                    }
+                }
+            }
+        }
+
+        smoothChaseChooseColorButton.apply {
+            action {
+                multiColorList.add(selectedColor.getHex().toLong(16))
+            }
+        }
+
+        buttonGroupDirection.forEach {
+            it.apply {
+                action {
+                    animation.direction(when (it.text) {
+                        "Forward" -> 'F'
+                        "Backward" -> 'B'
+                        else -> 'F'
+                    })
+                    animation.send()
+                    reset()
+                }
+            }
+        }
+
+        sendColorsButton.apply {
+            action {
+                animation.color(multiColorList[0])
+                animation.colorList(multiColorList)
+                this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
+                this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPaneButtons)
+                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
+            }
+        }
+
+        val defaultColorList = listOf<Long>(0xFF0000, 0xD52A00, 0xAB5500, 0xAB7F00, 0xABAB00, 0x56D500, 0x00FF00, 0x00D52A, 0x00AB55, 0x0056AA, 0x0000FF, 0x2A00D5, 0x5500AB, 0x7F0081, 0xAB0055, 0xD5002B)
+
+        defaultColorSelectButton.apply {
+            action {
+                animation.color(defaultColorList[0])
+                animation.colorList(defaultColorList)
+                this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
+                this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPaneButtons)
+                this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
+            }
+        }
+
+        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
+
+    }
+
+
+    override val root = borderpane {
+
+        style {
+            backgroundColor += Color.LIGHTSEAGREEN
+        }
+
+        addExitAndBlankButtons(this)
+        addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
+
+        center {
+            this += centerVBox.apply {
+                style {
+                    alignment = Pos.CENTER
+                }
+            }
+        }
+    }
+
+}

@@ -55,7 +55,7 @@ fun addExitAndBlankButtons(pane: BorderPane) {
     }
 }
 
-val pages = listOf(CustomColorView::class, InputDynamic::class, ContinuousAnimationRemoveView::class, ContinuousAnimationAddView2::class)
+val pages = listOf(CustomColorView::class, InputDynamic::class, ContinuousAnimationRemoveView::class, ContinuousAnimationAddView::class)
 
 
 fun addNavigation(thisClass: KClass<out View>, thisView: View, pane: BorderPane) {
