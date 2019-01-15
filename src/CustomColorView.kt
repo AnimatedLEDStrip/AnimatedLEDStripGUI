@@ -33,38 +33,18 @@ class CustomColorView : View() {
 
     /*  Helper functions for sending commands */
     private fun sendC(color: String) = AnimationData().animation(Animation.COLOR).color(color).send()
-//            MessageSender.send(mapOf("Animation" to Animations.COLOR, "Color1" to parseHex(color)))
 
-    private fun sendWIP(color: String) {
-//        val direction = when (selectedDirection) {
-//            Direction.BACKWARD -> 'B'
-//            Direction.FORWARD -> 'F'
-//        }
-        AnimationData().animation(Animation.WIPE).color(color).direction(selectedDirection).send()
-//        MessageSender.send(mapOf("Animation" to Animations.WIPE, "Color1" to parseHex(color), "Direction" to direction))
-    }
+    private fun sendWIP(color: String) =
+            AnimationData().animation(Animation.WIPE).color(color).direction(selectedDirection).send()
 
-    private fun sendSTK(color: String) {
-//        val direction = when (selectedDirection) {
-//            Direction.BACKWARD -> 'B'
-//            Direction.FORWARD -> 'F'
-//        }
-        AnimationData().animation(Animation.STACK).color(color).direction(selectedDirection).send()
-//        MessageSender.send(mapOf("Animation" to Animations.STACK, "Color1" to parseHex(color), "Direction" to direction))
-    }
+    private fun sendSTK(color: String) =
+            AnimationData().animation(Animation.STACK).color(color).direction(selectedDirection).send()
 
     private fun sendSTC(color: String) =
             AnimationData().animation(Animation.SPARKLETOCOLOR).color(color).send()
-//            MessageSender.send(mapOf("Animation" to Animations.SPARKLETOCOLOR, "Color1" to parseHex(color)))
 
-    private fun sendMTC(color: String) {
-//        val direction = when (selectedDirection) {
-//            Direction.BACKWARD -> 'B'
-//            Direction.FORWARD -> 'F'
-//        }
-        AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(color).direction(selectedDirection).send()
-//        MessageSender.send(mapOf("Animation" to Animations.MULTIPIXELRUNTOCOLOR, "Color1" to parseHex(color), "Direction" to direction))
-    }
+    private fun sendMTC(color: String) =
+            AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(color).direction(selectedDirection).send()
 
 
     override val root = borderpane {

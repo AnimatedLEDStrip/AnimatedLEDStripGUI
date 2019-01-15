@@ -36,7 +36,7 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "10.44.157.2"
                             try {
-                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress).start().setAsDefaultSender()
+                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20).start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
                                     if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
@@ -56,7 +56,7 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "10.44.103.233"
                             try {
-                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress).start().setAsDefaultSender()
+                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20).start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
                                     if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
@@ -76,7 +76,7 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "localhost"
                             try {
-                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress).start().setAsDefaultSender()
+                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20).start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
                                     if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
