@@ -73,7 +73,7 @@ fun addNavigation(thisClass: KClass<out View>, thisView: View, pane: BorderPane)
 
             onKeyPressed = EventHandler { t ->
                 when (t.code) {
-                    KeyCode.RIGHT -> thisView.replaceWith(pages[(index - 1) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+                    KeyCode.RIGHT -> thisView.replaceWith(pages[(index + 1) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
                     KeyCode.LEFT -> thisView.replaceWith(pages[(index - 1 + pages.size) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
                 }
             }
