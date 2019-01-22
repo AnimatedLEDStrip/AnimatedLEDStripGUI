@@ -1,6 +1,7 @@
-import animatedledstrip.client.AnimationData
 import animatedledstrip.client.AnimationSenderFactory
+import animatedledstrip.client.send
 import animatedledstrip.leds.Animation
+import animatedledstrip.leds.AnimationData
 import animatedledstrip.leds.ColorContainer
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos

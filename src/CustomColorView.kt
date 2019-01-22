@@ -1,4 +1,5 @@
-import animatedledstrip.client.AnimationData
+import animatedledstrip.client.send
+import animatedledstrip.leds.AnimationData
 import animatedledstrip.leds.Animation
 import animatedledstrip.leds.Direction
 import com.jfoenix.controls.JFXButton
