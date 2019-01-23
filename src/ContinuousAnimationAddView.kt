@@ -23,6 +23,7 @@ class ContinuousAnimationAddView : View() {
     private var pxrButton: JFXButton by singleAssign()
     private var pxrtButton: JFXButton by singleAssign()
     private var schButton: JFXButton by singleAssign()
+    private var smfButton: JFXButton by singleAssign()
     private var spkButton: JFXButton by singleAssign()
     private var spfButton: JFXButton by singleAssign()
     private var stoButton: JFXButton by singleAssign()
@@ -71,6 +72,9 @@ class ContinuousAnimationAddView : View() {
             setMinSize(50.0, 30.0)
         }
         schButton = JFXButton("Smooth Chase").apply {
+            setMinSize(50.0, 30.0)
+        }
+        smfButton = JFXButton("Smooth Fade").apply {
             setMinSize(50.0, 30.0)
         }
         spkButton = JFXButton("Sparkle").apply {
@@ -141,7 +145,7 @@ class ContinuousAnimationAddView : View() {
             alignment = Pos.CENTER
         }
 
-        buttonGroupAnimations = listOf(altButton, bncButton, mprButton, pxmButton, pxrButton, pxrtButton, schButton, spkButton, spfButton, stoButton)
+        buttonGroupAnimations = listOf(altButton, bncButton, mprButton, pxmButton, pxrButton, pxrtButton, schButton, smfButton, spkButton, spfButton, stoButton)
 
         buttonGroupDirection = listOf(forwardButton, backwardButton)
 
@@ -219,6 +223,14 @@ class ContinuousAnimationAddView : View() {
                 this@ContinuousAnimationAddView.centerVBox += colorGridPaneButtons
             }
         }
+        smfButton.apply {
+            action {
+                animation.animation = Animation.SMOOTHFADE
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += colorGridPaneButtons
+            }
+        }
         spkButton.apply {
             action {
                 animation.animation = Animation.SPARKLE
@@ -284,8 +296,7 @@ class ContinuousAnimationAddView : View() {
                                         if (animation.animation == Animation.STACKOVERFLOW) {
                                             animation.send()
                                             reset()
-                                        }
-                                        else this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
+                                        } else this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
                                     }
                                 }
                             }
@@ -322,7 +333,8 @@ class ContinuousAnimationAddView : View() {
                             else -> println("colorChoiceNumber out of 1..5")
                         }
                     }
-                    Animation.SMOOTHCHASE -> {
+                    Animation.SMOOTHCHASE,
+                    Animation.SMOOTHFADE -> {
                         multiColorList.add(selectedColor.getHex().toLong(16))
                     }
                     else -> {
