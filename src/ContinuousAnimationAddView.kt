@@ -17,12 +17,14 @@ class ContinuousAnimationAddView : View() {
     private var centerVBox: VBox by singleAssign()
 
     private var altButton: JFXButton by singleAssign()
+    private var bncButton: JFXButton by singleAssign()
     private var mprButton: JFXButton by singleAssign()
     private var pxmButton: JFXButton by singleAssign()
     private var pxrButton: JFXButton by singleAssign()
     private var pxrtButton: JFXButton by singleAssign()
     private var schButton: JFXButton by singleAssign()
     private var spkButton: JFXButton by singleAssign()
+    private var spfButton: JFXButton by singleAssign()
     private var stoButton: JFXButton by singleAssign()
 
     private var chooseColorButton: JFXButton by singleAssign()
@@ -51,28 +53,34 @@ class ContinuousAnimationAddView : View() {
         centerVBox = VBox()
 
         altButton = JFXButton("Alternate").apply {
-            setMinSize(50.0, 50.0)
+            setMinSize(50.0, 30.0)
+        }
+        bncButton = JFXButton("Bounce").apply {
+            setMinSize(50.0, 30.0)
         }
         mprButton = JFXButton("Multi-Pixel Run").apply {
-            setMinSize(50.0, 50.0)
+            setMinSize(50.0, 30.0)
         }
         pxmButton = JFXButton("Pixel Marathon").apply {
-            setMinSize(50.0, 50.0)
+            setMinSize(50.0, 30.0)
         }
         pxrButton = JFXButton("Pixel Run").apply {
-            setMinSize(50.0, 50.0)
+            setMinSize(50.0, 30.0)
         }
         pxrtButton = JFXButton("Pixel Run with Trail").apply {
-            setMinSize(50.0, 50.0)
+            setMinSize(50.0, 30.0)
         }
         schButton = JFXButton("Smooth Chase").apply {
-            setMinSize(50.0, 50.0)
+            setMinSize(50.0, 30.0)
         }
         spkButton = JFXButton("Sparkle").apply {
-            setMinSize(50.0, 50.0)
+            setMinSize(50.0, 30.0)
+        }
+        spfButton = JFXButton("Sparkle Fade").apply {
+            setMinSize(50.0, 30.0)
         }
         stoButton = JFXButton("Stack Overflow").apply {
-            setMinSize(50.0, 50.0)
+            setMinSize(50.0, 30.0)
         }
 
         forwardButton = JFXButton("Forward").apply {
@@ -128,12 +136,12 @@ class ContinuousAnimationAddView : View() {
 
         colorGridPaneButtons = hbox {
             this += defaultColorSelectButton
-            this += chooseColorButton
+            this += smoothChaseChooseColorButton
             this += sendColorsButton
             alignment = Pos.CENTER
         }
 
-        buttonGroupAnimations = listOf(altButton, mprButton, pxmButton, pxrButton, pxrtButton, schButton, spkButton, stoButton)
+        buttonGroupAnimations = listOf(altButton, bncButton, mprButton, pxmButton, pxrButton, pxrtButton, schButton, spkButton, spfButton, stoButton)
 
         buttonGroupDirection = listOf(forwardButton, backwardButton)
 
@@ -158,6 +166,14 @@ class ContinuousAnimationAddView : View() {
         altButton.apply {
             action {
                 animation.animation = Animation.ALTERNATE
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+            }
+        }
+        bncButton.apply {
+            action {
+                animation.animation = Animation.BOUNCE
                 this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
                 this@ContinuousAnimationAddView.centerVBox += colorGridPane
                 this@ContinuousAnimationAddView.centerVBox += chooseColorButton
@@ -211,6 +227,14 @@ class ContinuousAnimationAddView : View() {
                 this@ContinuousAnimationAddView.centerVBox += chooseColorButton
             }
         }
+        spfButton.apply {
+            action {
+                animation.animation = Animation.SPARKLEFADE
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+            }
+        }
         stoButton.apply {
             action {
                 animation.animation = Animation.STACKOVERFLOW
@@ -224,13 +248,14 @@ class ContinuousAnimationAddView : View() {
         chooseColorButton.apply {
             action {
                 when (animation.animation) {
-                    Animation.SPARKLE -> {
+                    Animation.BOUNCE,
+                    Animation.SPARKLE,
+                    Animation.SPARKLEFADE -> {
                         animation.color(selectedColor.getHex())
                         this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
                         this@ContinuousAnimationAddView.centerVBox.children.remove(chooseColorButton)
                         this@ContinuousAnimationAddView.centerVBox.children.remove(sendColorsButton)
                         animation.send()
-//                        MessageSender.send(animation)
                         reset()
                     }
                     Animation.ALTERNATE,
@@ -256,7 +281,11 @@ class ContinuousAnimationAddView : View() {
                                         this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
                                         this@ContinuousAnimationAddView.centerVBox.children.remove(chooseColorButton)
                                         this@ContinuousAnimationAddView.centerVBox.children.remove(sendColorsButton)
-                                        this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
+                                        if (animation.animation == Animation.STACKOVERFLOW) {
+                                            animation.send()
+                                            reset()
+                                        }
+                                        else this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
                                     }
                                 }
                             }

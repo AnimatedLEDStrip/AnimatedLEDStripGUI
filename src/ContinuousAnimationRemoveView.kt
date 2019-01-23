@@ -1,3 +1,4 @@
+import javafx.event.EventHandler
 import javafx.geometry.Pos
 import tornadofx.*
 
@@ -21,7 +22,9 @@ class ContinuousAnimationRemoveView : View() {
                     }
                 }
                 addNavigation(this@ContinuousAnimationRemoveView::class, this@ContinuousAnimationRemoveView, this)
-
+                onTouchPressed = EventHandler {
+                    wakeScreen()
+                }
             }
         }
     }
