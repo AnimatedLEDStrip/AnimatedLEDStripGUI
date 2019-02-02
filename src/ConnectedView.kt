@@ -35,8 +35,8 @@ class ConnectedView : View() {
                 buttonType = JFXButton.ButtonType.RAISED
                 font = Font.font(35.0)
                 useMaxSize = true
-                }
             }
+        }
     }
 
     override fun onDock() {
@@ -45,6 +45,7 @@ class ConnectedView : View() {
             runLater(1.0.seconds) {
                 AnimationSenderFactory.defaultSender?.setOnReceiveCallback { input ->
                     val animationData = input["Animation"] as Map<*, *>
+                    println("Received animation: $animationData")
                     animations += JFXButton(
                             "${animationData["Animation"]}: ID ${input["ID"].toString()}"
                     ).apply {
