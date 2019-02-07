@@ -1,4 +1,4 @@
-# LED_GUI
+# AnimatedLEDStripGUI
 
 ## Uses Java 8
 Because of a requirement in the [JFoenix](https://github.com/jfoenixadmin/JFoenix) library, we must use Java 8
