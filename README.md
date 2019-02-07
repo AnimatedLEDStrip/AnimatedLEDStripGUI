@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/AnimatedLEDStrip/AnimatedLEDStripGUI.svg?branch=master)](https://travis-ci.com/AnimatedLEDStrip/AnimatedLEDStripGUI)
+
 # AnimatedLEDStripGUI
 
 ## Uses Java 8
