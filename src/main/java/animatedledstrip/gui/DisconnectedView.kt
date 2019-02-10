@@ -41,7 +41,7 @@ class DisconnectedView : View() {
                             try {
                                 mainSender = AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20).start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
-                                    if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
+                                    if (!AnimationSenderFactory.defaultSender.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                                     else
                                         replaceWith(ConnectingView::class, ViewTransition.Fade(1.0.seconds))
@@ -61,7 +61,7 @@ class DisconnectedView : View() {
                             try {
                                 mainSender = AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20).start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
-                                    if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
+                                    if (!AnimationSenderFactory.defaultSender.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                                     else
                                         replaceWith(ConnectingView::class, ViewTransition.Fade(1.0.seconds))
@@ -81,7 +81,7 @@ class DisconnectedView : View() {
                             try {
                                 mainSender = AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20).start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
-                                    if (!AnimationSenderFactory.defaultSender!!.isDisconnected())
+                                    if (!AnimationSenderFactory.defaultSender.isDisconnected())
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                                     else
                                         replaceWith(ConnectingView::class, ViewTransition.Fade(1.0.seconds))

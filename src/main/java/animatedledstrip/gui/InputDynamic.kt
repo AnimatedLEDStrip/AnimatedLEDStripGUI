@@ -1,11 +1,11 @@
 package animatedledstrip.gui
 
 
-import animatedledstrip.ccpresets.CCPresets
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.Direction
 import animatedledstrip.client.send
-import animatedledstrip.leds.AnimationData
-import animatedledstrip.leds.Animation
-import animatedledstrip.leds.Direction
+import animatedledstrip.colors.ccpresets.CCPresets
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
 import javafx.scene.paint.Color

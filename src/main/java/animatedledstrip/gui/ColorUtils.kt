@@ -1,7 +1,7 @@
 package animatedledstrip.gui
 
 
-import animatedledstrip.leds.ColorContainer
+import animatedledstrip.colors.ColorContainer
 import javafx.scene.paint.Color
 
 fun ColorContainer.toColor(): Color =

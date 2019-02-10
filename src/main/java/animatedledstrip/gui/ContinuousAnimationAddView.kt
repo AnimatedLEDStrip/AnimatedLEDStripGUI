@@ -1,8 +1,8 @@
 package animatedledstrip.gui
 
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.client.send
-import animatedledstrip.leds.AnimationData
-import animatedledstrip.leds.Animation
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
 import javafx.scene.layout.GridPane
