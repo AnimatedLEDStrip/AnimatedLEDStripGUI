@@ -1,5 +1,5 @@
 $dokka.format:html
 $dokka.linkExtension:html
 $dokka.location:animatedledstrip.gui$getHex(javafx.scene.paint.Color)animatedledstrip.gui/javafx.scene.paint.-color/get-hex.html
-$dokka.location:animatedledstrip.gui$toColor(animatedledstrip.leds.ColorContainer)animatedledstrip.gui/animatedledstrip.leds.-color-container/to-color.html
+$dokka.location:animatedledstrip.gui$toColor(animatedledstrip.colors.ColorContainer)animatedledstrip.gui/animatedledstrip.colors.-color-container/to-color.html
 animatedledstrip.gui
