@@ -165,7 +165,20 @@ class ContinuousAnimationAddView : View() {
             alignment = Pos.CENTER
         }
 
-        buttonGroupAnimations = listOf(altButton, bncButton, mprButton, pxmButton, pxrButton, pxrtButton, schButton, smfButton, spkButton, spfButton, stoButton, testButton)
+        buttonGroupAnimations = listOf(
+            altButton,
+            bncButton,
+            mprButton,
+            pxmButton,
+            pxrButton,
+            pxrtButton,
+            schButton,
+            smfButton,
+            spkButton,
+            spfButton,
+            stoButton,
+            testButton
+        )
 
         buttonGroupDirection = listOf(forwardButton, backwardButton)
 
@@ -329,7 +342,9 @@ class ContinuousAnimationAddView : View() {
                                         if (animation.animation == Animation.STACKOVERFLOW) {
                                             animation.send()
                                             reset()
-                                        } else this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
+                                        } else this@ContinuousAnimationAddView.centerVBox.children.addAll(
+                                            buttonGroupDirection
+                                        )
                                     }
                                 }
                             }
@@ -386,11 +401,13 @@ class ContinuousAnimationAddView : View() {
         buttonGroupDirection.forEach {
             it.apply {
                 action {
-                    animation.direction(when (it.text) {
-                        "Forward" -> 'F'
-                        "Backward" -> 'B'
-                        else -> 'F'
-                    })
+                    animation.direction(
+                        when (it.text) {
+                            "Forward" -> 'F'
+                            "Backward" -> 'B'
+                            else -> 'F'
+                        }
+                    )
                     animation.send()
                     reset()
                 }
@@ -409,7 +426,24 @@ class ContinuousAnimationAddView : View() {
             }
         }
 
-        val defaultColorList = listOf<Long>(0xFF0000, 0xD52A00, 0xAB5500, 0xAB7F00, 0xABAB00, 0x56D500, 0x00FF00, 0x00D52A, 0x00AB55, 0x0056AA, 0x0000FF, 0x2A00D5, 0x5500AB, 0x7F0081, 0xAB0055, 0xD5002B)
+        val defaultColorList = listOf<Long>(
+            0xFF0000,
+            0xD52A00,
+            0xAB5500,
+            0xAB7F00,
+            0xABAB00,
+            0x56D500,
+            0x00FF00,
+            0x00D52A,
+            0x00AB55,
+            0x0056AA,
+            0x0000FF,
+            0x2A00D5,
+            0x5500AB,
+            0x7F0081,
+            0xAB0055,
+            0xD5002B
+        )
 
         defaultColorSelectButton.apply {
             action {

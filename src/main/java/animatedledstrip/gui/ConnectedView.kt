@@ -43,26 +43,24 @@ class ConnectedView : View() {
     }
 
     fun ColorContainer.toColor(): Color =
-            Color.color((color shr 16 and 0xFF) / 255.0, (color shr 8 and 0xFF) / 255.0, (color and 0xFF) / 255.0)
+        Color.color((color shr 16 and 0xFF) / 255.0, (color shr 8 and 0xFF) / 255.0, (color and 0xFF) / 255.0)
 
     override fun onDock() {
         super.onDock()
         this.run {
             runLater(1.0.seconds) {
-                AnimationSenderFactory.defaultSender.setOnReceiveCallback { input ->
-                    val animationData = input["Animation"] as Map<*, *>
-                    println("Received animation: $animationData")
+                AnimationSenderFactory.defaultSender.setOnReceiveCallback { input: AnimationData ->
+                    println("Received animation: $input")
                     animations += JFXButton(
-                            "${animationData["Animation"]}: ID ${input["ID"].toString()}"
+                        "${input.animation}: ID ${input.id}"
                     ).apply {
                         style {
                             alignment = Pos.CENTER
-                            val color1 = ColorContainer(animationData["Color1"] as List<Long>)
-                            backgroundColor += color1.toColor()
+                            backgroundColor += input.colors[0].toColorContainer().toColor()
                             font = Font.font(12.0)
-                            if (color1.grayscaled().color < 0x80) textFill = Color.WHITE
+                            if (input.colors[0].toColorContainer().grayscaled().color < 0x80) textFill = Color.WHITE
                         }
-                        val id = input["ID"].toString()
+                        val id = input.id
                         action {
                             GlobalScope.launch {
                                 AnimationData().animation(Animation.ENDANIMATION).id(id).send()
@@ -71,7 +69,7 @@ class ConnectedView : View() {
                         }
                     }
                 }
-                replaceWith(CustomColorView::class, ViewTransition.Fade(1.0.seconds))
+                replaceWith(ContinuousAnimationAddView::class, ViewTransition.Fade(1.0.seconds))
             }
         }
     }

@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
     }
 
 //    try {
-        launch<MyApp>(args)
+    launch<MyApp>(args)
 //    } catch (e: Exception) {
 //        println("Exception somewhere in program")
 //        try {

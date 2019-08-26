@@ -18,11 +18,11 @@ class SliderStylesheet : Stylesheet() {
         }
 
         track {
-                backgroundColor += c("black")
+            backgroundColor += c("black")
         }
 
         thumb {
-                backgroundColor += c("lightgray")
+            backgroundColor += c("lightgray")
         }
     }
 }

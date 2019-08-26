@@ -39,7 +39,9 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "10.0.0.254"
                             try {
-                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20).start().setAsDefaultSender()
+                                mainSender =
+                                    AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20)
+                                        .start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
                                     if (AnimationSenderFactory.defaultSender.connected)
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
@@ -59,7 +61,9 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "10.0.0.91"
                             try {
-                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20).start().setAsDefaultSender()
+                                mainSender =
+                                    AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20)
+                                        .start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
                                     if (AnimationSenderFactory.defaultSender.connected)
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
@@ -79,7 +83,9 @@ class DisconnectedView : View() {
                         action {
                             ipAddress = "localhost"
                             try {
-                                mainSender = AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20).start().setAsDefaultSender()
+                                mainSender =
+                                    AnimationSenderFactory.create(ipAddress = ipAddress, connectAttemptLimit = 20)
+                                        .start().setAsDefaultSender()
                                 runLater(1.0.seconds) {
                                     if (AnimationSenderFactory.defaultSender.connected)
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))

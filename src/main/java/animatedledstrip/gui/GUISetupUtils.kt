@@ -100,7 +100,12 @@ fun addExitAndBlankButtons(pane: BorderPane) {
     }
 }
 
-val pages = listOf(CustomColorView::class, InputDynamic::class, ContinuousAnimationRemoveView::class, ContinuousAnimationAddView::class)
+val pages = listOf(
+    CustomColorView::class,
+    InputDynamic::class,
+    ContinuousAnimationRemoveView::class,
+    ContinuousAnimationAddView::class
+)
 
 
 fun addNavigation(thisClass: KClass<out View>, thisView: View, pane: BorderPane) {
@@ -109,18 +114,31 @@ fun addNavigation(thisClass: KClass<out View>, thisView: View, pane: BorderPane)
         pane.apply {
 
             onSwipeLeft = EventHandler {
-                thisView.replaceWith(pages[(index + 1) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+                thisView.replaceWith(
+                    pages[(index + 1) % pages.size],
+                    ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT)
+                )
             }
 
             onSwipeRight = EventHandler {
-                thisView.replaceWith(pages[(index - 1 + pages.size) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
+                thisView.replaceWith(
+                    pages[(index - 1 + pages.size) % pages.size],
+                    ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT)
+                )
             }
 
             onKeyPressed = EventHandler { t ->
                 when (t.code) {
-                    KeyCode.RIGHT -> thisView.replaceWith(pages[(index + 1) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                    KeyCode.LEFT -> thisView.replaceWith(pages[(index - 1 + pages.size) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-                    else -> {}
+                    KeyCode.RIGHT -> thisView.replaceWith(
+                        pages[(index + 1) % pages.size],
+                        ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT)
+                    )
+                    KeyCode.LEFT -> thisView.replaceWith(
+                        pages[(index - 1 + pages.size) % pages.size],
+                        ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT)
+                    )
+                    else -> {
+                    }
                 }
             }
         }
@@ -134,18 +152,31 @@ fun addNavigation(thisClass: KClass<out View>, thisView: View, pane: ScrollPane)
         pane.apply {
 
             onSwipeLeft = EventHandler {
-                thisView.replaceWith(pages[(index + 1) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
+                thisView.replaceWith(
+                    pages[(index + 1) % pages.size],
+                    ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT)
+                )
             }
 
             onSwipeRight = EventHandler {
-                thisView.replaceWith(pages[(index - 1 + pages.size) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
+                thisView.replaceWith(
+                    pages[(index - 1 + pages.size) % pages.size],
+                    ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT)
+                )
             }
 
             onKeyPressed = EventHandler { t ->
                 when (t.code) {
-                    KeyCode.RIGHT -> thisView.replaceWith(pages[(index + 1) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                    KeyCode.LEFT -> thisView.replaceWith(pages[(index - 1 + pages.size) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-                    else -> {}
+                    KeyCode.RIGHT -> thisView.replaceWith(
+                        pages[(index + 1) % pages.size],
+                        ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT)
+                    )
+                    KeyCode.LEFT -> thisView.replaceWith(
+                        pages[(index - 1 + pages.size) % pages.size],
+                        ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT)
+                    )
+                    else -> {
+                    }
                 }
             }
         }
@@ -158,9 +189,16 @@ fun addNavigation(thisClass: KClass<out View>, thisView: View, pane: JFXButton) 
         pane.apply {
             onKeyPressed = EventHandler { t ->
                 when (t.code) {
-                    KeyCode.RIGHT -> thisView.replaceWith(pages[(index + 1) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT))
-                    KeyCode.LEFT -> thisView.replaceWith(pages[(index - 1 + pages.size) % pages.size], ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT))
-                    else -> {}
+                    KeyCode.RIGHT -> thisView.replaceWith(
+                        pages[(index + 1) % pages.size],
+                        ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT)
+                    )
+                    KeyCode.LEFT -> thisView.replaceWith(
+                        pages[(index - 1 + pages.size) % pages.size],
+                        ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT)
+                    )
+                    else -> {
+                    }
                 }
             }
         }

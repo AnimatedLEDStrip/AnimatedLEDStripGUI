@@ -39,16 +39,16 @@ class CustomColorView : View() {
     private fun sendC(color: String) = AnimationData().animation(Animation.COLOR).color(color).send()
 
     private fun sendWIP(color: String) =
-            AnimationData().animation(Animation.WIPE).color(color).direction(selectedDirection).send()
+        AnimationData().animation(Animation.WIPE).color(color).direction(selectedDirection).send()
 
     private fun sendSTK(color: String) =
-            AnimationData().animation(Animation.STACK).color(color).direction(selectedDirection).send()
+        AnimationData().animation(Animation.STACK).color(color).direction(selectedDirection).send()
 
     private fun sendSTC(color: String) =
-            AnimationData().animation(Animation.SPARKLETOCOLOR).color(color).send()
+        AnimationData().animation(Animation.SPARKLETOCOLOR).color(color).send()
 
     private fun sendMTC(color: String) =
-            AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(color).direction(selectedDirection).send()
+        AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(color).direction(selectedDirection).send()
 
 
     override val root = borderpane {
