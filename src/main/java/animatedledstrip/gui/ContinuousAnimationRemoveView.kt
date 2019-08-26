@@ -9,7 +9,7 @@ class ContinuousAnimationRemoveView : View() {
 
     override val root = borderpane {
 
-        addExitAndBlankButtons(this)
+        addExitAndBlankButtons(this@ContinuousAnimationRemoveView::class, this@ContinuousAnimationRemoveView, this)
         addNavigation(this@ContinuousAnimationRemoveView::class, this@ContinuousAnimationRemoveView, this)
 
         center {

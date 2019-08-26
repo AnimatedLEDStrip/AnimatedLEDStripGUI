@@ -57,7 +57,7 @@ class CustomColorView : View() {
             backgroundColor += Color.GRAY
         }
 
-        addExitAndBlankButtons(this)
+        addExitAndBlankButtons(this@CustomColorView::class, this@CustomColorView, this)
         addNavigation(this@CustomColorView::class, this@CustomColorView, this)
 
         right {

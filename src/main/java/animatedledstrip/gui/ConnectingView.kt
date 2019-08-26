@@ -40,22 +40,22 @@ class ConnectingView : View() {
         super.onDock()
         this.run {
             runLater(5.0.seconds) {
-                if (!AnimationSenderFactory.defaultSender.isDisconnected())
+                if (AnimationSenderFactory.defaultSender.connected)
                     replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                 else runLater(5.0.seconds) {
-                    if (!AnimationSenderFactory.defaultSender.isDisconnected())
+                    if (AnimationSenderFactory.defaultSender.connected)
                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                     else runLater(5.0.seconds) {
-                        if (!AnimationSenderFactory.defaultSender.isDisconnected())
+                        if (AnimationSenderFactory.defaultSender.connected)
                             replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                         else runLater(5.0.seconds) {
-                            if (!AnimationSenderFactory.defaultSender.isDisconnected())
+                            if (AnimationSenderFactory.defaultSender.connected)
                                 replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                             else runLater(5.0.seconds) {
-                                if (!AnimationSenderFactory.defaultSender.isDisconnected())
+                                if (AnimationSenderFactory.defaultSender.connected)
                                     replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                                 else runLater(5.0.seconds) {
-                                    if (!AnimationSenderFactory.defaultSender.isDisconnected())
+                                    if (AnimationSenderFactory.defaultSender.connected)
                                         replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
                                 }
                             }

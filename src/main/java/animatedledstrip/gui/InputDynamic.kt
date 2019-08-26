@@ -74,7 +74,7 @@ class InputDynamic : View() {
             backgroundColor += backColor
         }
 
-        addExitAndBlankButtons(this)
+        addExitAndBlankButtons(this@InputDynamic::class, this@InputDynamic, this)
         addNavigation(this@InputDynamic::class, this@InputDynamic, this)
 
         center {

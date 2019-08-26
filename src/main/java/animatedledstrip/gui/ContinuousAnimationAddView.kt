@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import tornadofx.*
+import java.lang.Math.random
 
 class ContinuousAnimationAddView : View() {
 
@@ -29,6 +30,7 @@ class ContinuousAnimationAddView : View() {
     private var spkButton: JFXButton by singleAssign()
     private var spfButton: JFXButton by singleAssign()
     private var stoButton: JFXButton by singleAssign()
+    private var testButton: JFXButton by singleAssign()
 
     private var chooseColorButton: JFXButton by singleAssign()
     private var smoothChaseChooseColorButton: JFXButton by singleAssign()
@@ -57,36 +59,52 @@ class ContinuousAnimationAddView : View() {
 
         altButton = JFXButton("Alternate").apply {
             setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
         bncButton = JFXButton("Bounce").apply {
             setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
         mprButton = JFXButton("Multi-Pixel Run").apply {
             setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
         pxmButton = JFXButton("Pixel Marathon").apply {
             setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
         pxrButton = JFXButton("Pixel Run").apply {
             setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
         pxrtButton = JFXButton("Pixel Run with Trail").apply {
             setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
         schButton = JFXButton("Smooth Chase").apply {
             setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
         smfButton = JFXButton("Smooth Fade").apply {
             setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
         spkButton = JFXButton("Sparkle").apply {
             setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
         spfButton = JFXButton("Sparkle Fade").apply {
             setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
         stoButton = JFXButton("Stack Overflow").apply {
             setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
+        }
+
+        testButton = JFXButton("TEST").apply {
+            setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
 
         forwardButton = JFXButton("Forward").apply {
@@ -147,7 +165,7 @@ class ContinuousAnimationAddView : View() {
             alignment = Pos.CENTER
         }
 
-        buttonGroupAnimations = listOf(altButton, bncButton, mprButton, pxmButton, pxrButton, pxrtButton, schButton, smfButton, spkButton, spfButton, stoButton)
+        buttonGroupAnimations = listOf(altButton, bncButton, mprButton, pxmButton, pxrButton, pxrtButton, schButton, smfButton, spkButton, spfButton, stoButton, testButton)
 
         buttonGroupDirection = listOf(forwardButton, backwardButton)
 
@@ -258,14 +276,30 @@ class ContinuousAnimationAddView : View() {
             }
         }
 
+        testButton.apply {
+            action {
+                animation.animation = Animation.RIPPLE
+                animation.center = (random() * 240).toInt()
+                animation.distance = (random() * 60).toInt()
+                animation.delay = 30
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+            }
+        }
 
         chooseColorButton.apply {
             action {
                 when (animation.animation) {
                     Animation.BOUNCE,
+                    Animation.MULTIPIXELRUN,
+                    Animation.PIXELRUN,
+                    Animation.PIXELRUNWITHTRAIL,
+                    Animation.RIPPLE,
                     Animation.SPARKLE,
-                    Animation.SPARKLEFADE -> {
-                        animation.color(selectedColor.getHex())
+                    Animation.SPARKLEFADE,
+                    Animation.SPLAT -> {
+                        animation.color0(selectedColor.getHex())
                         this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
                         this@ContinuousAnimationAddView.centerVBox.children.remove(chooseColorButton)
                         this@ContinuousAnimationAddView.centerVBox.children.remove(sendColorsButton)
@@ -273,17 +307,14 @@ class ContinuousAnimationAddView : View() {
                         reset()
                     }
                     Animation.ALTERNATE,
-                    Animation.MULTIPIXELRUN,
-                    Animation.PIXELRUN,
-                    Animation.PIXELRUNWITHTRAIL,
                     Animation.STACKOVERFLOW -> {
                         when (colorChoiceNumber) {
                             1 -> {
-                                animation.color1(selectedColor.getHex())
+                                animation.color0(selectedColor.getHex())
                                 colorChoiceNumber++
                             }
                             2 -> {
-                                animation.color2(selectedColor.getHex())
+                                animation.color1(selectedColor.getHex())
                                 colorChoiceNumber = 1
                                 when (animation.animation) {
                                     Animation.ALTERNATE, Animation.STACKOVERFLOW -> {
@@ -308,23 +339,23 @@ class ContinuousAnimationAddView : View() {
                     Animation.PIXELMARATHON -> {
                         when (colorChoiceNumber) {
                             1 -> {
-                                animation.color1(selectedColor.getHex())
+                                animation.color0(selectedColor.getHex())
                                 colorChoiceNumber++
                             }
                             2 -> {
-                                animation.color2(selectedColor.getHex())
+                                animation.color1(selectedColor.getHex())
                                 colorChoiceNumber++
                             }
                             3 -> {
-                                animation.color3(selectedColor.getHex())
+                                animation.color2(selectedColor.getHex())
                                 colorChoiceNumber++
                             }
                             4 -> {
-                                animation.color4(selectedColor.getHex())
+                                animation.color3(selectedColor.getHex())
                                 colorChoiceNumber++
                             }
                             5 -> {
-                                animation.color5(selectedColor.getHex())
+                                animation.color4(selectedColor.getHex())
                                 colorChoiceNumber = 1
                                 this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
                                 this@ContinuousAnimationAddView.centerVBox.children.remove(chooseColorButton)
@@ -368,8 +399,10 @@ class ContinuousAnimationAddView : View() {
 
         sendColorsButton.apply {
             action {
-                animation.color(multiColorList[0])
-                animation.colorList(multiColorList)
+                animation.color0(multiColorList[0])
+                multiColorList.forEach {
+                    animation.addColor(it)
+                }
                 this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
                 this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPaneButtons)
                 this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
@@ -380,8 +413,11 @@ class ContinuousAnimationAddView : View() {
 
         defaultColorSelectButton.apply {
             action {
-                animation.color(defaultColorList[0])
-                animation.colorList(defaultColorList)
+                animation.color0(defaultColorList[0])
+                defaultColorList.forEach {
+                    animation.addColor(it)
+                }
+//                animation.colorList(defaultColorList)
                 this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
                 this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPaneButtons)
                 this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupDirection)
@@ -399,7 +435,7 @@ class ContinuousAnimationAddView : View() {
             backgroundColor += Color.LIGHTSEAGREEN
         }
 
-        addExitAndBlankButtons(this)
+        addExitAndBlankButtons(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
 
         center {

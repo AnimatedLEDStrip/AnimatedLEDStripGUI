@@ -12,7 +12,7 @@ var isFullscreen = true
 
 var animations: VBox by singleAssign()
 
-var ipAddress = "10.44.157.2"
+var ipAddress = "10.0.0.254"
 
 var mainSender: AnimationSenderFactory.AnimationSender? = null
 
@@ -23,15 +23,15 @@ fun main(args: Array<String>) {
     } catch (e: Exception) {
     }
 
-    try {
+//    try {
         launch<MyApp>(args)
-    } catch (e: Exception) {
-        println("Exception somewhere in program")
-        try {
-            shutdownGUI()
-        } catch (e: Exception) {
-        }
-    }
+//    } catch (e: Exception) {
+//        println("Exception somewhere in program")
+//        try {
+//            shutdownGUI()
+//        } catch (e: Exception) {
+//        }
+//    }
 }
 
 fun shutdownGUI() {
