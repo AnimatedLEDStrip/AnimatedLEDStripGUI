@@ -1,8 +1,8 @@
 package animatedledstrip.gui
 
-import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.*
 import animatedledstrip.client.send
+import animatedledstrip.colors.ccpresets.CCBlack
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
 import javafx.scene.layout.GridPane
@@ -31,6 +31,8 @@ class ContinuousAnimationAddView : View() {
     private var spfButton: JFXButton by singleAssign()
     private var stoButton: JFXButton by singleAssign()
     private var testButton: JFXButton by singleAssign()
+    private var testButton2: JFXButton by singleAssign()
+    private var testButton3: JFXButton by singleAssign()
 
     private var chooseColorButton: JFXButton by singleAssign()
     private var smoothChaseChooseColorButton: JFXButton by singleAssign()
@@ -107,6 +109,17 @@ class ContinuousAnimationAddView : View() {
             addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
 
+        testButton2 = JFXButton("TEST").apply {
+            setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
+        }
+
+        testButton3 = JFXButton("TEST").apply {
+            setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
+        }
+
+
         forwardButton = JFXButton("Forward").apply {
             setMinSize(50.0, 50.0)
         }
@@ -177,7 +190,9 @@ class ContinuousAnimationAddView : View() {
             spkButton,
             spfButton,
             stoButton,
-            testButton
+            testButton,
+            testButton2,
+            testButton3
         )
 
         buttonGroupDirection = listOf(forwardButton, backwardButton)
@@ -291,10 +306,30 @@ class ContinuousAnimationAddView : View() {
 
         testButton.apply {
             action {
-                animation.animation = Animation.RIPPLE
-                animation.center = (random() * 240).toInt()
-                animation.distance = (random() * 60).toInt()
-                animation.delay = 30
+                animation.animation = Animation.SPLAT
+                animation.center = (random() * 100).toInt() + 50
+                animation.distance = (random() * 20).toInt()
+                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
+                this@ContinuousAnimationAddView.centerVBox += colorGridPane
+                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+            }
+        }
+
+        testButton2.apply {
+            action {
+                animation.animation = Animation.COLOR
+                animation.color(CCBlack)
+                animation.send()
+                reset()
+            }
+        }
+
+
+        testButton3.apply {
+            action {
+                animation.animation = Animation.SPLAT
+//                animation.center = (random() * 240).toInt()
+//                animation.distance = (random() * 60).toInt()
                 this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
                 this@ContinuousAnimationAddView.centerVBox += colorGridPane
                 this@ContinuousAnimationAddView.centerVBox += chooseColorButton
