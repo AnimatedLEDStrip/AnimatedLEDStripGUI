@@ -2,6 +2,7 @@ package animatedledstrip.gui
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.client.send
+import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
@@ -18,6 +19,7 @@ class ContinuousAnimationAddView : View() {
     private var selectedColor = Color.ALICEBLUE
 
     private var centerVBox: VBox by singleAssign()
+    private var sideVBox: VBox by singleAssign()
 
     private var altButton: JFXButton by singleAssign()
     private var bncButton: JFXButton by singleAssign()
@@ -30,9 +32,15 @@ class ContinuousAnimationAddView : View() {
     private var spkButton: JFXButton by singleAssign()
     private var spfButton: JFXButton by singleAssign()
     private var stoButton: JFXButton by singleAssign()
+
     private var testButton: JFXButton by singleAssign()
     private var testButton2: JFXButton by singleAssign()
     private var testButton3: JFXButton by singleAssign()
+    private var testButton4: JFXButton by singleAssign()
+    private var testButton5: JFXButton by singleAssign()
+    private var testButton6: JFXButton by singleAssign()
+    private var testButton7: JFXButton by singleAssign()
+    private var testButton8: JFXButton by singleAssign()
 
     private var chooseColorButton: JFXButton by singleAssign()
     private var smoothChaseChooseColorButton: JFXButton by singleAssign()
@@ -46,6 +54,8 @@ class ContinuousAnimationAddView : View() {
     private val buttonGroupAnimations: List<JFXButton>
     private val buttonGroupDirection: List<JFXButton>
 
+    private val buttonGroupTest: List<JFXButton>
+
     private var multiColorList: MutableList<Long>
 
     private var colorGridPane: GridPane by singleAssign()
@@ -58,6 +68,7 @@ class ContinuousAnimationAddView : View() {
     init {
 
         centerVBox = VBox()
+        sideVBox = VBox()
 
         altButton = JFXButton("Alternate").apply {
             setMinSize(50.0, 30.0)
@@ -104,21 +115,38 @@ class ContinuousAnimationAddView : View() {
             addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
 
-        testButton = JFXButton("TEST").apply {
+        testButton = JFXButton("SPLAT").apply {
             setMinSize(50.0, 30.0)
             addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
-
-        testButton2 = JFXButton("TEST").apply {
+        testButton2 = JFXButton("Reset").apply {
             setMinSize(50.0, 30.0)
             addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
-
         testButton3 = JFXButton("TEST").apply {
             setMinSize(50.0, 30.0)
             addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
         }
-
+        testButton4 = JFXButton("TEST").apply {
+            setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
+        }
+        testButton5 = JFXButton("TEST").apply {
+            setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
+        }
+        testButton6 = JFXButton("TEST").apply {
+            setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
+        }
+        testButton7 = JFXButton("TEST").apply {
+            setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
+        }
+        testButton8 = JFXButton("TEST").apply {
+            setMinSize(50.0, 30.0)
+            addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
+        }
 
         forwardButton = JFXButton("Forward").apply {
             setMinSize(50.0, 50.0)
@@ -189,13 +217,21 @@ class ContinuousAnimationAddView : View() {
             smfButton,
             spkButton,
             spfButton,
-            stoButton,
-            testButton,
-            testButton2,
-            testButton3
+            stoButton
         )
 
         buttonGroupDirection = listOf(forwardButton, backwardButton)
+
+        buttonGroupTest = listOf(
+            testButton,
+            testButton2,
+            testButton3,
+            testButton4,
+            testButton5,
+            testButton6,
+            testButton7,
+            testButton8
+        )
 
         fun reset() {
             this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
@@ -304,14 +340,13 @@ class ContinuousAnimationAddView : View() {
             }
         }
 
+
         testButton.apply {
             action {
-                animation.animation = Animation.SPLAT
-                animation.center = (random() * 100).toInt() + 50
-                animation.distance = (random() * 20).toInt()
-                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-                this@ContinuousAnimationAddView.centerVBox += colorGridPane
-                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+                animation.animation = Animation.PIXELMARATHON
+                for (i in 0..4) animation.addColor(darkColors.random().toColorContainer())
+                animation.send()
+                reset()
             }
         }
 
@@ -327,12 +362,39 @@ class ContinuousAnimationAddView : View() {
 
         testButton3.apply {
             action {
+                animation.animation = Animation.RIPPLE
+                animation.center = (random() * 100).toInt() + 50
+                animation.distance = (random() * 30).toInt().coerceAtLeast(5)
+                animation.color(darkColors.random().toColorContainer())
+                animation.send()
+                reset()
+            }
+        }
+
+        testButton4.apply {
+            action {
                 animation.animation = Animation.SPLAT
-//                animation.center = (random() * 240).toInt()
-//                animation.distance = (random() * 60).toInt()
-                this@ContinuousAnimationAddView.centerVBox.children.removeAll(buttonGroupAnimations)
-                this@ContinuousAnimationAddView.centerVBox += colorGridPane
-                this@ContinuousAnimationAddView.centerVBox += chooseColorButton
+                animation.center = (random() * 100).toInt() + 50
+                animation.distance = (random() * 20).toInt().coerceAtLeast(5)
+                animation.color(darkColors.random().toColorContainer())
+                animation.send()
+                reset()
+            }
+        }
+        testButton5.apply {
+            action {
+            }
+        }
+        testButton6.apply {
+            action {
+            }
+        }
+        testButton7.apply {
+            action {
+            }
+        }
+        testButton8.apply {
+            action {
             }
         }
 
@@ -482,10 +544,11 @@ class ContinuousAnimationAddView : View() {
 
         defaultColorSelectButton.apply {
             action {
-                animation.color0(defaultColorList[0])
+                val container = ColorContainer()
                 defaultColorList.forEach {
-                    animation.addColor(it)
+                    container += it
                 }
+                animation.color0(container)
 //                animation.colorList(defaultColorList)
                 this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPane)
                 this@ContinuousAnimationAddView.centerVBox.children.remove(colorGridPaneButtons)
@@ -494,6 +557,7 @@ class ContinuousAnimationAddView : View() {
         }
 
         this@ContinuousAnimationAddView.centerVBox.children.addAll(buttonGroupAnimations)
+        this@ContinuousAnimationAddView.sideVBox.children.addAll(buttonGroupTest)
 
     }
 
@@ -511,6 +575,14 @@ class ContinuousAnimationAddView : View() {
             this += centerVBox.apply {
                 style {
                     alignment = Pos.CENTER
+                }
+            }
+        }
+        
+        right {
+            this += sideVBox.apply {
+                style {
+                    alignment = Pos.CENTER_RIGHT
                 }
             }
         }

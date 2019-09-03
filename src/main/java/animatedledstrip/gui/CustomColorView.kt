@@ -1,9 +1,7 @@
 package animatedledstrip.gui
 
 
-import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.Direction
+import animatedledstrip.animationutils.*
 import animatedledstrip.client.send
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
