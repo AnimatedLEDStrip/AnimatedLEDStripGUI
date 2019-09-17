@@ -21,6 +21,43 @@ class ContinuousAnimationAddView : View() {
     private var centerVBox: VBox by singleAssign()
     private var sideVBox: VBox by singleAssign()
 
+    val data = AnimationData().continuous(true)
+
+
+
+    inner class AnimationButton(val animation: Animation) {
+        val text = when(animation) {
+            Animation.ALTERNATE -> "Alternate"
+            Animation.BOUNCE -> "Bounce"
+            Animation.METEOR -> "Meteor"
+            Animation.MULTIPIXELRUN -> "Multi-Pixel Run"
+            Animation.RIPPLE -> "Ripple"
+            Animation.PIXELMARATHON -> "Pixel Marathon"
+            Animation.PIXELRUN -> "Pixel Run"
+            Animation.SMOOTHCHASE -> "Smooth Chase"
+            Animation.SMOOTHFADE -> "Smooth Fade"
+            Animation.SPARKLE -> "Sparkle"
+            Animation.SPARKLEFADE -> "Sparkle Fade"
+            Animation.STACKOVERFLOW -> "Stack Overflow"
+            else -> ""
+        }
+
+        val button = JFXButton(text).apply {
+            setMinSize(50.0, 30.0)
+            action {
+                data.animation = animation
+
+            }
+        }
+
+    }
+
+
+
+    private fun removeAnimationButtons() {
+        this.centerVBox.children.removeAll()
+    }
+
     private var altButton: JFXButton by singleAssign()
     private var bncButton: JFXButton by singleAssign()
     private var mprButton: JFXButton by singleAssign()
@@ -69,6 +106,9 @@ class ContinuousAnimationAddView : View() {
 
         centerVBox = VBox()
         sideVBox = VBox()
+
+
+
 
         altButton = JFXButton("Alternate").apply {
             setMinSize(50.0, 30.0)
@@ -166,7 +206,7 @@ class ContinuousAnimationAddView : View() {
             setMinSize(50.0, 50.0)
         }
 
-        defaultColorSelectButton = JFXButton("Send Default Colors").apply {
+        defaultColorSelectButton = JFXButton("Use Default Colors").apply {
             setMinSize(50.0, 50.0)
         }
 
@@ -363,8 +403,8 @@ class ContinuousAnimationAddView : View() {
         testButton3.apply {
             action {
                 animation.animation = Animation.RIPPLE
-                animation.center = (random() * 100).toInt() + 50
-                animation.distance = (random() * 30).toInt().coerceAtLeast(5)
+                animation.center = (random() * 200).toInt()
+                animation.distance = (random() * 100).toInt().coerceAtLeast(5)
                 animation.color(darkColors.random().toColorContainer())
                 animation.send()
                 reset()
@@ -568,7 +608,7 @@ class ContinuousAnimationAddView : View() {
             backgroundColor += Color.LIGHTSEAGREEN
         }
 
-        addExitAndBlankButtons(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
+        addTopButtons(this@ContinuousAnimationAddView, this)
         addNavigation(this@ContinuousAnimationAddView::class, this@ContinuousAnimationAddView, this)
 
         center {

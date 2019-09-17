@@ -1,6 +1,7 @@
 package animatedledstrip.gui
 
 
+import animatedledstrip.client.AnimationSenderFactory
 import com.jfoenix.controls.JFXButton
 import javafx.event.EventHandler
 import javafx.geometry.Pos
@@ -11,7 +12,7 @@ import javafx.scene.text.Font
 import tornadofx.*
 import kotlin.reflect.KClass
 
-fun addExitAndBlankButtons(thisClass: KClass<out View>, thisView: View, pane: BorderPane) {
+fun addTopButtons(thisView: View, pane: BorderPane) {
     pane.top {
         /*  Create BorderPane to help set layout */
         borderpane {
@@ -29,7 +30,24 @@ fun addExitAndBlankButtons(thisClass: KClass<out View>, thisView: View, pane: Bo
                     action {
                         blankScreen()
                     }
-                    addNavigation(thisClass, thisView, pane)
+                }
+            }
+
+            center {
+                /*  Add disconnect button */
+                this += JFXButton("Disconnect").apply {
+                    alignment = Pos.CENTER    // Set alignment
+                    font = Font.font(15.0)  // Set font size
+                    /*  When button is pressed */
+                    action {
+                        if (AnimationSenderFactory.defaultSender.connected)
+                            AnimationSenderFactory.defaultSender.end()
+                        val a = animations.children
+                        animations.children.removeAll(a)
+                        thisView.apply {
+                            replaceWith(DisconnectedView::class, ViewTransition.Fade(1.0.seconds))
+                        }
+                    }
                 }
             }
 
@@ -38,7 +56,7 @@ fun addExitAndBlankButtons(thisClass: KClass<out View>, thisView: View, pane: Bo
             *   Quits GUI
             */
             right {
-                /*  Add exit button*/
+                /*  Add exit button */
                 this += JFXButton("Exit").apply {
                     alignment = Pos.CENTER_RIGHT    // Set alignment
                     font = Font.font(15.0)  // Set font size
@@ -46,7 +64,6 @@ fun addExitAndBlankButtons(thisClass: KClass<out View>, thisView: View, pane: Bo
                     action {
                         shutdownGUI()   // Quit GUI
                     }
-                    addNavigation(thisClass, thisView, pane)
                 }
             }
         }
@@ -60,7 +77,7 @@ fun addExitAndBlankButtons(thisClass: KClass<out View>, thisView: View, pane: Bo
     }
 }
 
-fun addExitAndBlankButtons(pane: BorderPane) {
+fun addTopButtons(pane: BorderPane) {
     pane.top {
         /*  Create BorderPane to help set layout */
         borderpane {
@@ -98,11 +115,14 @@ fun addExitAndBlankButtons(pane: BorderPane) {
             }
         }
     }
+    pane.onTouchPressed = EventHandler {
+        wakeScreen()
+    }
 }
 
 val pages = listOf(
     CustomColorView::class,
-    InputDynamic::class,
+    PresetsView::class,
     ContinuousAnimationRemoveView::class,
     ContinuousAnimationAddView::class
 )
@@ -116,14 +136,14 @@ fun addNavigation(thisClass: KClass<out View>, thisView: View, pane: BorderPane)
             onSwipeLeft = EventHandler {
                 thisView.replaceWith(
                     pages[(index + 1) % pages.size],
-                    ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT)
+                    ViewTransition.Fade(0.3.seconds)
                 )
             }
 
             onSwipeRight = EventHandler {
                 thisView.replaceWith(
                     pages[(index - 1 + pages.size) % pages.size],
-                    ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT)
+                    ViewTransition.Fade(0.3.seconds)
                 )
             }
 
@@ -154,14 +174,14 @@ fun addNavigation(thisClass: KClass<out View>, thisView: View, pane: ScrollPane)
             onSwipeLeft = EventHandler {
                 thisView.replaceWith(
                     pages[(index + 1) % pages.size],
-                    ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.LEFT)
+                    ViewTransition.Fade(0.3.seconds)
                 )
             }
 
             onSwipeRight = EventHandler {
                 thisView.replaceWith(
                     pages[(index - 1 + pages.size) % pages.size],
-                    ViewTransition.Slide(0.3.seconds, ViewTransition.Direction.RIGHT)
+                    ViewTransition.Fade(0.3.seconds)
                 )
             }
 

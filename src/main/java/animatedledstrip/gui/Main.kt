@@ -2,6 +2,7 @@ package animatedledstrip.gui
 
 
 import animatedledstrip.client.AnimationSenderFactory
+import com.jfoenix.controls.JFXButton
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
 import org.apache.commons.exec.CommandLine
@@ -11,6 +12,8 @@ import tornadofx.*
 var isFullscreen = true
 
 var animations: VBox by singleAssign()
+
+val buttons = mutableMapOf<String, JFXButton>()
 
 var ipAddress = "10.0.0.254"
 
@@ -24,7 +27,7 @@ fun main(args: Array<String>) {
     }
 
 //    try {
-    launch<MyApp>(args)
+        launch<MyApp>(args)
 //    } catch (e: Exception) {
 //        println("Exception somewhere in program")
 //        try {
@@ -62,7 +65,6 @@ class MyApp : App(DisconnectedView::class, SliderStylesheet::class) {
             stage.minHeight = 480.0
             stage.minWidth = 800.0
         }
-
         try {
             val commandLine = CommandLine.parse("xset -d :0 s 30")
             val executor = DefaultExecutor()

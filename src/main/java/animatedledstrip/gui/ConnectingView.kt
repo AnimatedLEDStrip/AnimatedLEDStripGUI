@@ -2,6 +2,7 @@ package animatedledstrip.gui
 
 
 import animatedledstrip.client.AnimationSenderFactory
+import animatedledstrip.utils.delayBlocking
 import com.jfoenix.controls.JFXButton
 import javafx.geometry.Pos
 import javafx.scene.paint.Color
@@ -24,7 +25,7 @@ class ConnectingView : View() {
             alignment = Pos.CENTER
         }
 
-        addExitAndBlankButtons(this)
+        addTopButtons(this@ConnectingView, this)
 
         bottom {
             this += JFXButton("").apply {
@@ -39,30 +40,15 @@ class ConnectingView : View() {
     override fun onDock() {
         super.onDock()
         this.run {
-            runLater(5.0.seconds) {
-                if (AnimationSenderFactory.defaultSender.connected)
-                    replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
-                else runLater(5.0.seconds) {
-                    if (AnimationSenderFactory.defaultSender.connected)
-                        replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
-                    else runLater(5.0.seconds) {
-                        if (AnimationSenderFactory.defaultSender.connected)
-                            replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
-                        else runLater(5.0.seconds) {
-                            if (AnimationSenderFactory.defaultSender.connected)
-                                replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
-                            else runLater(5.0.seconds) {
-                                if (AnimationSenderFactory.defaultSender.connected)
-                                    replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
-                                else runLater(5.0.seconds) {
-                                    if (AnimationSenderFactory.defaultSender.connected)
-                                        replaceWith(ConnectedView::class, ViewTransition.Fade(1.0.seconds))
-                                }
-                            }
-                        }
-                    }
+            while (AnimationSenderFactory.defaultSender.started) {
+                if (AnimationSenderFactory.defaultSender.connected) {
+                    replaceWith(ConnectedView::class, ViewTransition.Fade(0.1.seconds))
                 }
+                delayBlocking(50)
             }
+            delayBlocking(500)
+            if (!AnimationSenderFactory.defaultSender.started)
+                replaceWith(DisconnectedView::class, ViewTransition.Fade(0.1.seconds))
         }
     }
 }
