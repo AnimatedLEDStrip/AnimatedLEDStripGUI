@@ -1,5 +1,10 @@
 ---
 language: java
+jdk: openjdk8
+
+cache:
+  directories:
+    - $HOME/.m2
 
 branches:
   only:
@@ -10,22 +15,21 @@ branches:
 stages:
   - name: test
   - name: deploy gh-pages
-    if: branch = master AND type != pull_request
+    if: (branch = master OR branch =~ /^v.*/) AND type != pull_request
 
 jobs:
   include:
     - stage: test
-      install:
-        -
+      install: skip
       after_success: bash <(curl -s https://codecov.io/bash)
     - stage: deploy gh-pages
-      install:
-        -
-      test:
-        -
+      script: skip
+      install: skip
       deploy:
         - provider: script
           script: mvn --settings .maven.xml site -DskipTests=true -B && git add dokka
+          on:
+            all_branches: true
         - provider: pages
           skip-cleanup: true
           github-token: $GITHUB_TOKEN
@@ -33,4 +37,4 @@ jobs:
           verbose: true
           local_dir: ./dokka
           on:
-            branch: master
+            all_branches: true
